@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'authantications/phone_auth.dart';
+import 'auth/signup_screen.dart';
+
 
 
 
