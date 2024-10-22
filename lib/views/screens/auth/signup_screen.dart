@@ -34,7 +34,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   SizedBox(height: 20),
-
                   // "Sign Up" text
                   Center(
                     child: Text(
