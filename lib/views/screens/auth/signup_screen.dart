@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery_user_app/authantications/verify_otp.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -8,7 +6,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  var auth = FirebaseAuth.instance;
   var verify = "";
 
   TextEditingController userNameController = TextEditingController();
@@ -132,7 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         padding: EdgeInsets.symmetric(vertical: 16),
                       ),
                       onPressed: () {
-                        phoneAuth();
+                        //phoneAuth();
                       },
                       child: Text(
                         'Next',
@@ -166,31 +163,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  void phoneAuth() async {
-    String number = "+91${userPhoneController.text.trim()}";
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: number,
-      verificationCompleted: (PhoneAuthCredential credential) {
-        print("Verification Completed: ${credential}");
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        print("Verification Failed: ${e.message}");
-      },
-      codeSent: (String verificationId, int? resendToken) {
-        setState(() {
-          verify = verificationId;
-        });
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => VerifyOtp(verifycationId: verificationId),
-          ),
-        );
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        print("Timeout: $verificationId");
-      },
-      timeout: Duration(seconds: 60), // Set timeout duration for code retrieval
-    );
-  }
+  // void phoneAuth() async {
+  //   String number = "+91${userPhoneController.text.trim()}";
+  //   await FirebaseAuth.instance.verifyPhoneNumber(
+  //     phoneNumber: number,
+  //     verificationCompleted: (PhoneAuthCredential credential) {
+  //       print("Verification Completed: ${credential}");
+  //     },
+  //     verificationFailed: (FirebaseAuthException e) {
+  //       print("Verification Failed: ${e.message}");
+  //     },
+  //     codeSent: (String verificationId, int? resendToken) {
+  //       setState(() {
+  //         verify = verificationId;
+  //       });
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => VerifyOtp(verifycationId: verificationId),
+  //         ),
+  //       );
+  //     },
+  //     codeAutoRetrievalTimeout: (String verificationId) {
+  //       print("Timeout: $verificationId");
+  //     },
+  //     timeout: Duration(seconds: 60), // Set timeout duration for code retrieval
+  //   );
+  // }
 }
