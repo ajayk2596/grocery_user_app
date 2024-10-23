@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:ProfileSettingsPage()
+      home:HomeLungungenPage()
     );
   }
 }
