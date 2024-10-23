@@ -15,6 +15,7 @@ class _UserScreenState extends State<UserScreen> {
       appBar: AppBar(
         title: Text('UserScreen'),
         backgroundColor: Colors.orange,
+        centerTitle: true,
       ),
     );
   }
