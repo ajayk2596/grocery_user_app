@@ -14,6 +14,7 @@ class _UserScreenState extends State<UserScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('UserScreen'),
+        backgroundColor: Colors.orange,
       ),
     );
   }
