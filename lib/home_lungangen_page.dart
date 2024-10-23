@@ -31,7 +31,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.all(screenWidth * 0.04), // 4% of screen width for padding
+        padding: EdgeInsets.all(screenWidth * 0.07), // 4% of screen width for padding
         child: SingleChildScrollView( // Allows scrolling when content overflows
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
