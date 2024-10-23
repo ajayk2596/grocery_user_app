@@ -12,7 +12,10 @@ import 'home_favorit2_page.dart';
 import 'home_favorite_page.dart';
 import 'home_fruit_page.dart';
 import 'home_lungangen_page.dart';
+import 'home_order_page.dart';
 import 'home_orginal_mango.dart';
+import 'home_profile_page.dart';
+import 'home_welcome_page.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:HomeAccountSreen()
+      home:ProfileSettingsPage()
     );
   }
 }
