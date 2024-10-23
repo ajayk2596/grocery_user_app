@@ -31,13 +31,13 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.all(screenWidth * 0.04), // 4% of screen width for padding
-        child: SingleChildScrollView( // Allows scrolling when content overflows
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Search Bar
-              TextField(
+        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04), // Horizontal padding
+        child: Column(
+          children: [
+            // Search Bar
+            Padding(
+              padding: EdgeInsets.only(top: screenHeight * 0.02), // Padding at the top
+              child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
                   hintText: 'Search',
@@ -50,78 +50,80 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
                   fillColor: Colors.grey[200],
                 ),
               ),
-              SizedBox(height: screenHeight * 0.02), // 2% of screen height
+            ),
+            SizedBox(height: screenHeight * 0.02), // Space after the search bar
 
-              // Categories Section
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Categories',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: screenWidth * 0.05, // Font size responsive to screen width
-                    ),
+            // Categories Section
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Categories',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: screenWidth * 0.05, // Font size responsive to screen width
                   ),
-                  Text(
-                    'See All',
-                    style: TextStyle(color: Colors.orange),
-                  ),
-                ],
-              ),
-              SizedBox(height: screenHeight * 0.02),
-
-              // Categories Row
-              SingleChildScrollView( // Allows horizontal scrolling for categories
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    CategoryItem(
-                      title: 'Fruits',
-                      imagePath: 'assets/images/Grapes.png',
-                      color: Colors.purple,
-                    ),
-                    CategoryItem(
-                      title: 'Vegetables',
-                      imagePath: 'assets/images/Vagetables.png',
-                      color: Colors.orange,
-                    ),
-                    CategoryItem(
-                      title: 'Meat',
-                      imagePath: 'assets/images/only-meat.png',
-                      color: Colors.redAccent,
-                    ),
-                    CategoryItem(
-                      title: 'Fish',
-                      imagePath: 'assets/images/Fish.png',
-                      color: Colors.redAccent,
-                    ),
-                  ],
                 ),
-              ),
-              SizedBox(height: screenHeight * 0.03),
+                Text(
+                  'See All',
+                  style: TextStyle(color: Colors.orange),
+                ),
+              ],
+            ),
+            SizedBox(height: screenHeight * 0.02), // Space after the categories title
 
-              // Popular Deals Section
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // Categories Row
+            SingleChildScrollView( // Allows horizontal scrolling for categories
+              scrollDirection: Axis.horizontal,
+              child: Row(
                 children: [
-                  Text(
-                    'Popular Deals',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: screenWidth * 0.05, // Font size responsive to screen width
-                    ),
+                  CategoryItem(
+                    title: 'Fruits',
+                    imagePath: 'assets/images/Grapes.png',
+                    color: Colors.purple,
                   ),
-                  Text(
-                    'See All',
-                    style: TextStyle(color: Colors.orange),
+                  CategoryItem(
+                    title: 'Vegetables',
+                    imagePath: 'assets/images/Vagetables.png',
+                    color: Colors.orange,
+                  ),
+                  CategoryItem(
+                    title: 'Meat',
+                    imagePath: 'assets/images/only-meat.png',
+                    color: Colors.redAccent,
+                  ),
+                  CategoryItem(
+                    title: 'Fish',
+                    imagePath: 'assets/images/Fish.png',
+                    color: Colors.redAccent,
                   ),
                 ],
               ),
-              SizedBox(height: screenHeight * 0.02),
+            ),
+            SizedBox(height: screenHeight * 0.03), // Space after categories
 
-              // Deals List
-              SingleChildScrollView( // Allows horizontal scrolling for deals
+            // Popular Deals Section
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Popular Deals',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: screenWidth * 0.05, // Font size responsive to screen width
+                  ),
+                ),
+                Text(
+                  'See All',
+                  style: TextStyle(color: Colors.orange),
+                ),
+              ],
+            ),
+            SizedBox(height: screenHeight * 0.02), // Space after popular deals title
+
+            // Deals List
+            Expanded( // Make sure this expands to fill available space
+              child: SingleChildScrollView( // Allows horizontal scrolling for deals
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
@@ -152,8 +154,8 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
 
@@ -217,10 +219,10 @@ class CategoryItem extends StatelessWidget {
         children: [
           CircleAvatar(
             backgroundColor: color.withOpacity(0.2),
-            radius: screenWidth * 0.08, // Adjusted radius based on screen width
+            radius: screenWidth * 0.1, // Adjusted radius based on screen width
             child: Image.asset(
               imagePath,
-              height: screenWidth * 0.08, // Adjusted image size
+              height: screenWidth * 0.1, // Adjusted image size
               fit: BoxFit.cover,
             ),
           ),
@@ -228,7 +230,7 @@ class CategoryItem extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              fontSize: screenWidth * 0.04, // Dynamic font size
+              fontSize: screenWidth * 0.045, // Dynamic font size
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
@@ -275,8 +277,8 @@ class DealItem extends StatelessWidget {
         children: [
           // Reduced the size of the image
           Container(
-            height: screenWidth * 0.2, // Reduced height to make image smaller
-            width: screenWidth * 0.2,  // Reduced width to make image smaller
+            height: screenWidth * 0.25, // Reduced height to make image smaller
+            width: screenWidth * 0.25,  // Reduced width to make image smaller
             child: Image.asset(
               imagePath,
               fit: BoxFit.cover, // Ensures the image covers the container proportionally
