@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1052409059860",
+    "project_id": "grocery-app-d9595",
+    "storage_bucket": "grocery-app-d9595.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052409059860:android:3d4c689e6b27e93eba6501",
+        "android_client_info": {
+          "package_name": "com.techedu.grocery_user_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDs-W2iQvLkbHGAuXmUbJuxGSG-05hpLtw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
