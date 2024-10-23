@@ -16,6 +16,7 @@ class _UserScreenState extends State<UserScreen> {
         title: Text('UserScreen'),
         backgroundColor: Colors.orange,
         centerTitle: true,
+        leading: Icon(Icons.add),
       ),
     );
   }
