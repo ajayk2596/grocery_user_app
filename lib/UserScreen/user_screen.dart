@@ -13,7 +13,7 @@ class _UserScreenState extends State<UserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Screen'),
+        title: Text('User    Screen'),
         backgroundColor: Colors.orange,
         centerTitle: true,
         leading: const Icon(Icons.add),
