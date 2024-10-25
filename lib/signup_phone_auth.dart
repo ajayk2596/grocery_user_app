@@ -1,11 +1,27 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:grocery_user_app/signup2verify_otp.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
-class phone_auth extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
   @override
-  _phone_authState createState() => _phone_authState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _phone_authState extends State<phone_auth> {
+class _SignUpScreenState extends State<SignUpScreen> {
+
+  var auth = FirebaseAuth.instance;
+  var verify = "";
+  final _namrController = TextEditingController();
+  final _phoneController = TextEditingController(); // Phone number controller
+  String? _completePhoneNumber; // To store full phone number
+
+  @override
+  void dispose() {
+    _phoneController.dispose(); // Dispose controller to avoid memory leaks
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +70,7 @@ class _phone_authState extends State<phone_auth> {
 
                   // Name Surname TextField
                   TextField(
+                    controller: _namrController,
                     decoration: InputDecoration(
                       hintText: 'Name Surname',
                       contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
@@ -68,35 +85,25 @@ class _phone_authState extends State<phone_auth> {
                   SizedBox(height: 15),
 
                   // Custom Phone Number TextField with Flag Icon and Arrow Dropdown
-                  TextField(
-                    keyboardType: TextInputType.phone,
+                  IntlPhoneField(
+                    controller: _phoneController,
                     decoration: InputDecoration(
+                     hintText: "Phone Number",
+
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
                         borderSide: BorderSide.none,
                       ),
                       filled: true,
                       fillColor: Colors.grey[200],
-                      hintText: 'Phone Number',
-                      contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                      // Prefix with Flag icon and dropdown arrow
-                      prefixIcon: Container(
-                        width: 90, // Adjust as needed
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            // Flag image (Provide the image file path)
-                            Image.asset(
-                              "assets/images/flag.png",
-                              width: 24, // Flag size
-                            ),
-                            SizedBox(width: 5),
-                            Icon(Icons.arrow_drop_down), // Arrow icon for dropdown
-                          ],
-                        ),
-                      ),
                     ),
+                    initialCountryCode: 'IN', // Default country code (India)
+                    onChanged: (phone) {
+                      setState(() {
+                        _completePhoneNumber = phone.completeNumber; // Get the full phone number with country code
+                      });
+                      print(_completePhoneNumber); // Optional: Log the full phone number
+                    },
                   ),
                   SizedBox(height: 20),
 
@@ -125,10 +132,12 @@ class _phone_authState extends State<phone_auth> {
                         padding: EdgeInsets.symmetric(vertical: 16),
                       ),
                       onPressed: () {
+                        phoneAuth();
                         // Handle next button action
-                        setState(() {
-                          // Add state logic here if necessary
-                        });
+                        if (_completePhoneNumber != null) {
+                          // Add logic to handle the phone number here
+                          print("Phone number: $_completePhoneNumber");
+                        }
                       },
                       child: Text(
                         'Next',
@@ -143,9 +152,6 @@ class _phone_authState extends State<phone_auth> {
                     child: GestureDetector(
                       onTap: () {
                         // Handle login action
-                        setState(() {
-                          // Add state logic if necessary
-                        });
                       },
                       child: Text(
                         'Already have an account? Login',
@@ -162,6 +168,33 @@ class _phone_authState extends State<phone_auth> {
           );
         },
       ),
+    );
+  }
+  void phoneAuth()async {
+
+    var number = "+91${_phoneController.text}";
+    print(number);
+    auth.verifyPhoneNumber(
+      timeout: Duration(seconds: 3),
+      phoneNumber: number,
+      verificationCompleted: (phoneAuthCredential) {
+        print(phoneAuthCredential.verificationId);
+      },
+      verificationFailed: (error) {
+        print(error.message);
+      },
+      codeSent: (verificationId, forceResendingToken) {
+        verify = verificationId;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => VerifyOtp(verifycationId: verificationId),
+          ),
+        );
+      },
+      codeAutoRetrievalTimeout: (verificationId) {
+
+      },
     );
   }
 }
