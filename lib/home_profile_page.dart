@@ -143,36 +143,21 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex, // This controls the selected tab index
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _currentIndex,
         selectedItemColor: Colors.orange,
         unselectedItemColor: Colors.grey,
-        showUnselectedLabels: true,
         onTap: (index) {
           setState(() {
-            _currentIndex = index; // Update the current index when tapped
+            _currentIndex = index;
           });
         },
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shop),
-            label: 'Shop',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorite',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Shop'),
+          BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorite'),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
         ],
       ),
     );
