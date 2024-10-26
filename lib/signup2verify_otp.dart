@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pinput.dart';
 
 import 'home_fruit_page.dart';
+import 'home_lungangen_page.dart';
 
 class VerifyOtp extends StatefulWidget {
   final String verifycationId;
@@ -77,31 +78,24 @@ TextEditingController  pinputController = TextEditingController();
             // OTP Input fields
             Center(
               child: Container(
-                child: Card(
-                  elevation: 3,
-                  child:   Pinput(
-                      defaultPinTheme: PinTheme(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              color: Colors.white70
-                          )
-                      ),
-                      keyboardType: TextInputType.number,
-                      controller: pinputController,
-                      length: 6 ,
-                      showCursor: true,
-                      pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                      textInputAction: TextInputAction.next,
-                      onCompleted: (pinputController){
-                        if(pinputController==123456){
-                          Navigator.pop(context);MaterialPageRoute(builder: (_)=> HomePageApple());
-                        }
+                child: Pinput(
+                    defaultPinTheme: PinTheme(
+                        decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.black54),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Colors.white70
+                        )
+                    ),
+                    keyboardType: TextInputType.number,
+                    controller: pinputController,
+                    length: 6 ,
+                    showCursor: true,
+                    pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                    textInputAction: TextInputAction.next,
+                    onCompleted: (pinputController){
+                      if(pinputController==123456){
+                        Navigator.pop(context);MaterialPageRoute(builder: (_)=> HomePageApple());
                       }
-                  ),
-                  shape: RoundedRectangleBorder(
-
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  ),
+                    }
                 ),
                 height: 70,
                 width: 450,
@@ -168,7 +162,7 @@ TextEditingController  pinputController = TextEditingController();
 
       var id =value.user?.uid;
 
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePageApple(),));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeLungungenPage(),));
 
     }).onError((error, stackTrace) {
 

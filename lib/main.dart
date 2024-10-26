@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_user_app/sign_in_page.dart';
+import 'package:grocery_user_app/signup1.dart';
 import 'package:grocery_user_app/signup2verify_otp.dart';
 import 'package:grocery_user_app/signup_phone_auth.dart';
+import 'package:grocery_user_app/splash_screen.dart';
 
 import 'firebase_options.dart';
 import 'home_account_page.dart';
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:SignUpScreen()
+      home:SplashScreen()
     );
   }
 }

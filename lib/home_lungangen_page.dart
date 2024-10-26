@@ -1,5 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:grocery_user_app/sign_in_page.dart';
+import 'package:grocery_user_app/signup1.dart';
+
+import 'home_fruit_page.dart';
+import 'home_profile_page.dart';
 
 class HomeLungungenPage extends StatefulWidget {
   @override
@@ -7,18 +11,22 @@ class HomeLungungenPage extends StatefulWidget {
 }
 
 class _HomeLungungenPageState extends State<HomeLungungenPage> {
-  // Search controller
   TextEditingController _searchController = TextEditingController();
-
-  // Maintain current selected index for BottomNavigationBar
   int _currentIndex = 0;
+
+  // Define GlobalKey for Scaffold
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  // Drawer open function
+  void _openDrawer() {
+    _scaffoldKey.currentState?.openDrawer();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width; // Get screen width
-    var screenHeight = MediaQuery.of(context).size.height; // Get screen height
-
     return Scaffold(
+      key: _scaffoldKey,  // Attach GlobalKey to Scaffold
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -29,212 +37,260 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
           style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout, color: Colors.orange),
+            onPressed: _openDrawer, // Open drawer on logout icon click
+          ),
+        ],
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04), // Horizontal padding
-        child: Column(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
           children: [
-            // Search Bar
-            Padding(
-              padding: EdgeInsets.only(top: screenHeight * 0.02), // Padding at the top
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                ),
+            DrawerHeader(
+              decoration: BoxDecoration(color: Colors.orange),
+              child: Text(
+                'Menu',
+                style: TextStyle(color: Colors.white, fontSize: 24),
               ),
             ),
-            SizedBox(height: screenHeight * 0.02), // Space after the search bar
+            ListTile(
+              leading: Icon(Icons.edit),
+              title: Text('Edit Profile'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileSettingsPage(),));
 
-            // Categories Section
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Categories',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: screenWidth * 0.05, // Font size responsive to screen width
-                  ),
-                ),
-                Text(
-                  'See All',
-                  style: TextStyle(color: Colors.orange),
-                ),
-              ],
+                // Handle edit profile action
+              },
             ),
-            SizedBox(height: screenHeight * 0.02), // Space after the categories title
-
-            // Categories Row
-            SingleChildScrollView( // Allows horizontal scrolling for categories
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  CategoryItem(
-                    title: 'Fruits',
-                    imagePath: 'assets/images/Grapes.png',
-                    color: Colors.purple,
-                  ),
-                  CategoryItem(
-                    title: 'Vegetables',
-                    imagePath: 'assets/images/Vagetables.png',
-                    color: Colors.orange,
-                  ),
-                  CategoryItem(
-                    title: 'Meat',
-                    imagePath: 'assets/images/only-meat.png',
-                    color: Colors.redAccent,
-                  ),
-                  CategoryItem(
-                    title: 'Fish',
-                    imagePath: 'assets/images/Fish.png',
-                    color: Colors.redAccent,
-                  ),
-                ],
-              ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePageSignInKey(),));
+                // Handle logout action
+              },
             ),
-            SizedBox(height: screenHeight * 0.03), // Space after categories
-
-            // Popular Deals Section
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Popular Deals',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: screenWidth * 0.05, // Font size responsive to screen width
-                  ),
-                ),
-                Text(
-                  'See All',
-                  style: TextStyle(color: Colors.orange),
-                ),
-              ],
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () {
+                // Handle settings action
+              },
             ),
-            SizedBox(height: screenHeight * 0.02), // Space after popular deals title
+            ListTile(
+              leading: Icon(Icons.lock),
+              title: Text('Forget Password'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreens2(),));
 
-            // Deals List
-            Expanded( // Make sure this expands to fill available space
-              child: SingleChildScrollView( // Allows horizontal scrolling for deals
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    DealItem(
-                      title: 'Red Apple',
-                      subtitle: '1kg, priceg',
-                      price: '\$4.99',
-                      imagePath: 'assets/images/Apple.png',
-                    ),
-                    DealItem(
-                      title: 'Original Banana',
-                      subtitle: '1kg, priceg',
-                      price: '\$5.99',
-                      imagePath: 'assets/images/Banana.png',
-                    ),
-                    DealItem(
-                      title: 'Pineapple',
-                      subtitle: '1kg, priceg',
-                      price: '\$3.99',
-                      imagePath: 'assets/images/Bowl.png',
-                    ),
-                    DealItem(
-                      title: 'Mango',
-                      subtitle: '1kg, priceg',
-                      price: '\$3.99',
-                      imagePath: 'assets/images/Mango.png',
-                    ),
-                  ],
-                ),
-              ),
+                // Handle forget password action
+              },
             ),
           ],
         ),
       ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          double screenWidth = constraints.maxWidth;
+          double screenHeight = constraints.maxHeight;
 
-      // Bottom Navigation Bar
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+              child: Column(
+                children: [
+                  // Search Bar
+                  Padding(
+                    padding: EdgeInsets.only(top: screenHeight * 0.02),
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        prefixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
+
+                  // Categories Section
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Categories',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: screenWidth * 0.05,
+                        ),
+                      ),
+                      Text(
+                        'See All',
+                        style: TextStyle(color: Colors.orange, fontSize: screenWidth * 0.04),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
+
+                  // Categories Row
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        InkWell(
+
+                          child: CategoryItem(
+                            title: 'Fruits',
+                            imagePath: 'assets/images/Grapes.png',
+                            color: Colors.purple,
+                            screenWidth: screenWidth,
+                          ),
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) =>HomePageApple (),));
+                          },
+                        ),
+                        CategoryItem(
+                          title: 'Vegetables',
+                          imagePath: 'assets/images/Vagetables.png',
+                          color: Colors.orange,
+                          screenWidth: screenWidth,
+                        ),
+                        CategoryItem(
+                          title: 'Meat',
+                          imagePath: 'assets/images/only-meat.png',
+                          color: Colors.redAccent,
+                          screenWidth: screenWidth,
+                        ),
+                        CategoryItem(
+                          title: 'Fish',
+                          imagePath: 'assets/images/Fish.png',
+                          color: Colors.redAccent,
+                          screenWidth: screenWidth,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height: screenHeight * 0.03),
+
+                  // Popular Deals Section
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Popular Deals',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: screenWidth * 0.05,
+                        ),
+                      ),
+                      Text(
+                        'See All',
+                        style: TextStyle(color: Colors.orange, fontSize: screenWidth * 0.04),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: screenHeight * 0.02),
+
+                  // Deals List
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        DealItem(
+                          title: 'Red Apple',
+                          subtitle: '1kg, price',
+                          price: '\$4.99',
+                          imagePath: 'assets/images/Apple.png',
+                          screenWidth: screenWidth,
+                        ),
+                        DealItem(
+                          title: 'Original Banana',
+                          subtitle: '1kg, price',
+                          price: '\$5.99',
+                          imagePath: 'assets/images/Banana.png',
+                          screenWidth: screenWidth,
+                        ),
+                        DealItem(
+                          title: 'Pineapple',
+                          subtitle: '1kg, price',
+                          price: '\$3.99',
+                          imagePath: 'assets/images/Bowl.png',
+                          screenWidth: screenWidth,
+                        ),
+                        DealItem(
+                          title: 'Mango',
+                          subtitle: '1kg, price',
+                          price: '\$3.99',
+                          imagePath: 'assets/images/Mango.png',
+                          screenWidth: screenWidth,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed, // Ensure all items are displayed evenly
-        currentIndex: _currentIndex, // Current selected index
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _currentIndex,
         selectedItemColor: Colors.orange,
         unselectedItemColor: Colors.grey,
-        showUnselectedLabels: true,
-        iconSize: screenWidth * 0.06, // Keep icon size fixed for all items
-        selectedFontSize: screenWidth * 0.035, // Keep font size fixed
-        unselectedFontSize: screenWidth * 0.035, // Keep font size same for selected/unselected
         onTap: (index) {
           setState(() {
-            _currentIndex = index; // Update selected index
+            _currentIndex = index;
           });
         },
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shop),
-            label: 'Shop',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorite',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Shop'),
+          BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorite'),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
         ],
       ),
     );
   }
 }
 
-// Category Item Widget
 class CategoryItem extends StatelessWidget {
   final String title;
   final String imagePath;
   final Color color;
+  final double screenWidth;
 
-  CategoryItem({required this.title, required this.imagePath, required this.color});
+  CategoryItem({
+    required this.title,
+    required this.imagePath,
+    required this.color,
+    required this.screenWidth,
+  });
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width; // Dynamic width calculation
     return Container(
-      width: screenWidth * 0.25, // Make width responsive
+      width: screenWidth * 0.3,
+      margin: EdgeInsets.only(right: 10),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
             backgroundColor: color.withOpacity(0.2),
-            radius: screenWidth * 0.1, // Adjusted radius based on screen width
-            child: Image.asset(
-              imagePath,
-              height: screenWidth * 0.1, // Adjusted image size
-              fit: BoxFit.cover,
-            ),
+            radius: screenWidth * 0.1,
+            child: Image.asset(imagePath, height: screenWidth * 0.15, fit: BoxFit.cover),
           ),
           SizedBox(height: 5),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: screenWidth * 0.045, // Dynamic font size
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -246,58 +302,34 @@ class DealItem extends StatelessWidget {
   final String subtitle;
   final String price;
   final String imagePath;
+  final double screenWidth;
 
   DealItem({
     required this.title,
     required this.subtitle,
     required this.price,
     required this.imagePath,
+    required this.screenWidth,
   });
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width; // Dynamic width calculation
     return Container(
-      width: screenWidth * 0.35, // Adjusted width to make smaller
-      margin: EdgeInsets.only(right: screenWidth * 0.02), // Adjusted margin
+      width: screenWidth * 0.35,
+      margin: EdgeInsets.only(right: 10),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            blurRadius: 10,
-            offset: Offset(0, 5),
-          ),
-        ],
+        boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.3), blurRadius: 10, offset: Offset(0, 5))],
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Reduced the size of the image
-          Container(
-            height: screenWidth * 0.25, // Reduced height to make image smaller
-            width: screenWidth * 0.25,  // Reduced width to make image smaller
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.cover, // Ensures the image covers the container proportionally
-            ),
-          ),
+          Image.asset(imagePath, height: screenWidth * 0.2, fit: BoxFit.cover),
           SizedBox(height: 10),
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.bold),
-            maxLines: 1, // Prevents overflow by limiting text to one line
-            overflow: TextOverflow.ellipsis, // Adds ellipsis if text is too long
-          ),
-          SizedBox(height: 5),
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold), maxLines: 1, overflow: TextOverflow.ellipsis),
           Text(subtitle, style: TextStyle(color: Colors.grey)),
-          SizedBox(height: 5),
-          Text(
-            price,
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
-          ),
+          Text(price, style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)),
         ],
       ),
     );
