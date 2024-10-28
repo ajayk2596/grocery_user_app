@@ -37,7 +37,9 @@ class SignUpScreens2 extends StatelessWidget {
                 Container(
                   width: screenSize.width * 0.5,
                   height: screenSize.height * 0.2,
-                  child: Image.network("assets/images/mobile.png"), // Replace with valid image URL
+                  child: Image.asset(
+                    "assets/images/mobile.png",
+                  ), // Replace with valid image URL
                 ),
                 SizedBox(height: 10),
                 Text(

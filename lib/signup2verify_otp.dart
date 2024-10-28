@@ -1,7 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pinput/pinput.dart';
+
+import 'home_fruit_page.dart';
+import 'home_lungangen_page.dart';
 
 class VerifyOtp extends StatefulWidget {
+  final String verifycationId;
+  const VerifyOtp({super.key, required this.verifycationId});
 
   @override
   _VerifyOtpState createState() => _VerifyOtpState();
@@ -9,7 +17,7 @@ class VerifyOtp extends StatefulWidget {
 
 class _VerifyOtpState extends State<VerifyOtp> {
   // OTP controller
-  List<TextEditingController> otpControllers = List.generate(6, (index) => TextEditingController());
+TextEditingController  pinputController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -68,18 +76,39 @@ class _VerifyOtpState extends State<VerifyOtp> {
             ),
             SizedBox(height: 30),
             // OTP Input fields
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(6, (index) {
-                return _buildOTPField(context, otpControllers[index]);
-              }),
+            Center(
+              child: Container(
+                child: Pinput(
+                    defaultPinTheme: PinTheme(
+                        decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.black54),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Colors.white70
+                        )
+                    ),
+                    keyboardType: TextInputType.number,
+                    controller: pinputController,
+                    length: 6 ,
+                    showCursor: true,
+                    pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                    textInputAction: TextInputAction.next,
+                    onCompleted: (pinputController){
+                      if(pinputController==123456){
+                        Navigator.pop(context);MaterialPageRoute(builder: (_)=> HomePageApple());
+                      }
+                    }
+                ),
+                height: 70,
+                width: 450,
+              ),
             ),
             SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                // Perform sign-up or verification logic here
+                PhoneAuthCredential credentile = PhoneAuthProvider.credential(verificationId: widget.verifycationId, smsCode: pinputController.text);
+                verifyOtp(credentile);
               },
               style: ElevatedButton.styleFrom(
+
                 backgroundColor: Colors.orange,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -126,5 +155,18 @@ class _VerifyOtpState extends State<VerifyOtp> {
         },
       ),
     );
+  }
+  Future<void> verifyOtp(PhoneAuthCredential credential)async {
+
+    FirebaseAuth.instance.signInWithCredential(credential).then((value){
+
+      var id =value.user?.uid;
+
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeLungungenPage(),));
+
+    }).onError((error, stackTrace) {
+
+      Fluttertoast.showToast(msg: "$error");
+    });
   }
 }
