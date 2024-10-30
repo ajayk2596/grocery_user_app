@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:grocery_user_app/ViewProduct/view_product.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 
@@ -74,17 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
    var firebase=FirebaseFirestore.instance.collection("Product");
 
-  insertData(){
-     firebase.doc().set({
-       "name": nameController.text,
-       "dess": desController.text,
-       "quantity": quantityController.text,
-       "timing":DateTime.timestamp(),
-       "date": DateTime.now(),
-       "image": "https://statusneo.com/wp-content/uploads/2023/02/MicrosoftTeams-image551ad57e01403f080a9df51975ac40b6efba82553c323a742b42b1c71c1e45f1.jpg",
-       "pricr": priceController.text,
-     });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -183,8 +173,8 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(onPressed: () {
                setState(() {});
-                //insertData();
-                _uploadFile();
+                 //_uploadFile();
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ViewProduct(),));
                }, child: Text('Add Data')),
             )
           ],
