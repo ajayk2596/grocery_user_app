@@ -27,15 +27,24 @@ class _ViewProductState extends State<ViewProduct> {
             itemBuilder: (context, index) {
              return Column(
                children: [
-                 Text(userData?.docs[index]['image']),
-                 Text(userData?.docs[index]['name'])
+                 //Text(userData?.docs[index]['image']),
+                 //Text(userData?.docs[index]['name'])
+                 ClipRRect(
+                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10),),
+                   // child: CircleAvatar(
+                   //   backgroundImage: userData?.docs[index]['image'] != null
+                   //       ? NetworkImage(userData!.docs[index]['image'] as String)  
+                   //       : const AssetImage('assets/placeholder.png') as ImageProvider,
+                   // ),
+                 ),
+                  CircleAvatar(backgroundImage: NetworkImage(userData?.docs[index]["image"]),),
+                  Text(userData?.docs[index]['name'])
                ],
              );
           },);
         }
         else if(snapshot.hasError){
           return Center(child: Text("Error: ${snapshot.error}"));
-
         }
         else{
           return Text(' no data');

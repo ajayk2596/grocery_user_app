@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(onPressed: () {
                setState(() {});
-                 //_uploadFile();
+                 _uploadFile();
                 Navigator.push(context, MaterialPageRoute(builder: (context) => ViewProduct(),));
                }, child: Text('Add Data')),
             )
