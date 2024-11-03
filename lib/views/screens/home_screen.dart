@@ -20,8 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_image == null) return;
 
     // File ko Firebase Storage mein upload karne ke liye filename generate karein
-    String fileName = basename(_image!.path);
-    Reference firebaseStorageRef = FirebaseStorage.instance.ref().child('uploads/$fileName');
+    //String fileName = basename(_image!.path);
+
+    String filePath = 'images/${DateTime.now().millisecondsSinceEpoch}.jpg';
+    Reference firebaseStorageRef = FirebaseStorage.instance.ref().child(filePath);
 
     try {
       // Upload task start
@@ -30,15 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // Upload ke baad download URL get karenge
       String downloadURL = await firebaseStorageRef.getDownloadURL();
-      firebase.doc().set({
+      var id= DateTime.now().microsecondsSinceEpoch.toString();
+      firebase.doc(id).set({
+        "id":id,
         "name": nameController.text,
         "dess": desController.text,
         "quantity": quantityController.text,
         "timing":DateTime.timestamp(),
         "date": DateTime.now(),
-        //"image": "https://statusneo.com/wp-content/uploads/2023/02/MicrosoftTeams-image551ad57e01403f080a9df51975ac40b6efba82553c323a742b42b1c71c1e45f1.jpg",
-        "image": downloadURL,
-        "pricr": priceController.text,
+         "image": downloadURL,
+         "pricr": priceController.text,
       });
 
       setState(() {
