@@ -7,6 +7,7 @@ import 'package:grocery_user_app/signup_phone_auth.dart';
 import 'package:grocery_user_app/splash_screen.dart';
 import 'package:grocery_user_app/views/screens/home_screen.dart';
 
+import 'RegisterScreen/register_screen.dart';
 import 'firebase_options.dart';
 import 'home_account_page.dart';
 import 'home_cart_page.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:HomeScreen()
+      home:RegisterScreen()
     );
   }
 }

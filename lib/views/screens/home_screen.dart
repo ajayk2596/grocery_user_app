@@ -29,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
       // Upload task start
       UploadTask uploadTask = firebaseStorageRef.putFile(_image!);
       await uploadTask;
-
       // Upload ke baad download URL get karenge
       String downloadURL = await firebaseStorageRef.getDownloadURL();
       var id= DateTime.now().microsecondsSinceEpoch.toString();
@@ -55,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
   File? _image; // Store selected image
-
   Future<void> _pickImage() async {
     final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
