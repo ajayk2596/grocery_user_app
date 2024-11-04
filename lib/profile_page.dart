@@ -6,13 +6,13 @@ import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'controllers/provider/users/user_controller.dart';
 
-class ProfileScreen extends StatefulWidget {
+class Register_page extends StatefulWidget {
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  _Register_pageState createState() => _Register_pageState();
 }
 
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _Register_pageState extends State<Register_page> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
