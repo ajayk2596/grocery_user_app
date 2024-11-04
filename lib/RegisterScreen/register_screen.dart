@@ -85,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     body: Column(
       children: [
-        SizedBox(height: 50,),
+        const SizedBox(height: 50,),
 
         GestureDetector(
           onTap: _pickImage, // Trigger image picker on tap
