@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:grocery_user_app/signup_phone_auth.dart';
-import 'package:grocery_user_app/views/screens/auth/signup_screen.dart';
-
-
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:grocery_user_app/profile_page.dart';
+import 'package:grocery_user_app/views/screens/auth/email_screen.dart';
+import 'package:grocery_user_app/views/screens/home/home_lungangen_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,49 +11,62 @@ class SplashScreen extends StatefulWidget {
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
+
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-
-
-    Timer(Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpScreen(),));
-    });
     super.initState();
+    Timer(Duration(seconds: 3), () {
+      _navigateBasedOnAuth();
+    });
   }
+
+  void _navigateBasedOnAuth() {
+    // Check if a user is already signed in
+    User? currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null) {
+      // User is signed in, navigate to profile page
+   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>HomeLungungenPage() ,));
+    } else {
+      // No user is signed in, navigate to login screen
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EmailLoginScreen(),));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-
-        Center(
-          child: Container(
-            height: 200,
-            child: Image.asset(
-              'assets/images/Illustration.png', // Add your illustration image asset here
-              fit: BoxFit.contain,
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+            child: Container(
+              height: 200,
+              child: Image.asset(
+                'assets/images/Illustration.png', // Add your illustration image asset here
+                fit: BoxFit.contain,
+              ),
             ),
           ),
-        ),
-
-        Text(
-          "Splash Screen",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+          SizedBox(height: 30),
+          Text(
+            "Welcome To Grocery",
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        SizedBox(height: 20),
-        CircularProgressIndicator(
-          backgroundColor: Colors.white,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-          strokeWidth: 5,
-        ),
-
-      ],
-    ),);
+          SizedBox(height: 20),
+          CircularProgressIndicator(
+            backgroundColor: Colors.white,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+            strokeWidth: 5,
+          ),
+        ],
+      ),
+    );
   }
 }
