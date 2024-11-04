@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery_user_app/RegisterScreen/login_page.dart';
@@ -68,13 +67,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-
   final firebase = FirebaseFirestore.instance.collection("userDetails");
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
