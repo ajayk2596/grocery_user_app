@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_user_app/sign_in_page.dart';
-import 'package:grocery_user_app/signup1.dart';
+import 'package:grocery_user_app/controllers/provider/users/user_controller.dart';
+import 'package:grocery_user_app/views/screens/auth/sign_in_page.dart';
+import 'package:grocery_user_app/views/screens/auth/signup1.dart';
+import 'package:provider/provider.dart';
 
+import '../../../models/user_model.dart';
 import 'home_fruit_page.dart';
 import 'home_profile_page.dart';
 
@@ -24,6 +27,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
 
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<UserController>(context);
     return Scaffold(
       key: _scaffoldKey,  // Attach GlobalKey to Scaffold
       resizeToAvoidBottomInset: true,
@@ -39,7 +43,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.logout, color: Colors.orange),
+            icon: Icon(Icons.more_vert, color: Colors.orange),
             onPressed: _openDrawer, // Open drawer on logout icon click
           ),
         ],
@@ -48,28 +52,83 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: Colors.orange),
-              child: Text(
-                'Menu',
-                style: TextStyle(color: Colors.white, fontSize: 24),
-              ),
+            StreamBuilder<UserModel?>(
+              stream: data.userDataStream,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return DrawerHeader(
+                    decoration: BoxDecoration(color: Colors.orange),
+                    child: Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return DrawerHeader(
+                    decoration: BoxDecoration(color: Colors.orange),
+                    child: Center(
+                      child: Text(
+                        'Error loading user data',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  );
+                } else if (!snapshot.hasData || snapshot.data == null) {
+                  return DrawerHeader(
+                    decoration: BoxDecoration(color: Colors.orange),
+                    child: Center(
+                      child: Text(
+                        'User data not found.',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  );
+                } else {
+                  final userData = snapshot.data!;
+                  return DrawerHeader(
+                    decoration: BoxDecoration(color: Colors.orange),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: 40,
+                          backgroundImage: userData.profilePicture != null
+                              ? NetworkImage(userData.profilePicture!)
+                              : const AssetImage('assets/images/default_profile.png') as ImageProvider,
+                          child: userData.profilePicture == null
+                              ? Icon(Icons.person, size: 40, color: Colors.white)
+                              : null,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          userData.uname ?? 'User Name',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        Text(
+                          userData.uemail ?? 'Email',
+                          style: TextStyle(color: Colors.white70),
+                        ),
+                        Text(
+                          userData.phone ?? 'Phone',
+                          style: TextStyle(color: Colors.white70),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              },
             ),
             ListTile(
               leading: Icon(Icons.edit),
               title: Text('Edit Profile'),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileSettingsPage(),));
-
-                // Handle edit profile action
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileSettingsPage()));
               },
             ),
             ListTile(
               leading: Icon(Icons.logout),
               title: Text('Logout'),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePageSignInKey(),));
-                // Handle logout action
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePageSignInKey()));
               },
             ),
             ListTile(
@@ -83,14 +142,16 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
               leading: Icon(Icons.lock),
               title: Text('Forget Password'),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreens2(),));
-
-                // Handle forget password action
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreens2()));
               },
             ),
           ],
         ),
       ),
+
+
+
+
       body: LayoutBuilder(
         builder: (context, constraints) {
           double screenWidth = constraints.maxWidth;
