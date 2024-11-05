@@ -83,11 +83,11 @@ class _Register_pageState extends State<Register_page> {
                 radius: 60,
                 backgroundImage: data.profileImage != null
                     ? FileImage(data.profileImage!)
-                    : (data.userData?.profilePicture != null
-                    ? NetworkImage(data.userData!.profilePicture!)
+                    : (data.userData?.imageUrl != null
+                    ? NetworkImage(data.userData!.imageUrl! as String)
                     : null) as ImageProvider?,
                 child: data.profileImage == null &&
-                    (data.userData?.profilePicture == null)
+                    (data.userData?.imageUrl == null)
                     ? Icon(Icons.person, size: 60, color: Colors.grey)
                     : null,
               ),
@@ -111,12 +111,15 @@ class _Register_pageState extends State<Register_page> {
                 onPressed: () async {
                   await data.userSignUp(
                     context: context,
-                    name: nameController.text,
-                    email: emailController.text,
-                    phone:phoneController.text.toString(),
-                    imageFile: data.profileImage,
-                    password: passwordController.text
+                    name:nameController.text,
+                    email:emailController.text,
+                    password:passwordController.text,
+                    phone:phoneController.text,
+                    imageFile:data.profileImage
+
+
                   );
+
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,

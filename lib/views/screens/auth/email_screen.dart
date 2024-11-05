@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery_user_app/profile_page.dart';
+import 'package:grocery_user_app/views/screens/auth/register_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controllers/provider/users/user_controller.dart';
+import '../../../ragister_page.dart';
 
 class EmailLoginScreen extends StatefulWidget {
   const EmailLoginScreen({super.key});
@@ -57,7 +58,6 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
             ),
             SizedBox(height: 20),
 
-            // Password TextField
             Card(
               elevation: 2,
               child: TextField(
@@ -145,7 +145,6 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 TextButton(
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => Register_page(),));
-                    // Handle create account action
                   },
                   child: Text(
                     'Create Account',

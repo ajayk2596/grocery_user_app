@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:grocery_user_app/profile_page.dart';
 import 'package:grocery_user_app/views/screens/auth/email_screen.dart';
 import 'package:grocery_user_app/views/screens/home/home_lungangen_page.dart';
 

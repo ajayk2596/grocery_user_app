@@ -10,8 +10,8 @@ class ProfileSettingsPage extends StatefulWidget {
 
 class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   int _currentIndex = 0;
-  bool isNotificationsEnabled = true; // For Notifications switch
-  String selectedLanguage = "English"; // For Language setting
+  bool isNotificationsEnabled = true;
+  String selectedLanguage = "English";
 
   @override
   Widget build(BuildContext context) {

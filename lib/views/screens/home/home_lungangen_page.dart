@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:grocery_user_app/controllers/provider/users/user_controller.dart';
 import 'package:grocery_user_app/views/screens/auth/sign_in_page.dart';
 import 'package:grocery_user_app/views/screens/auth/signup1.dart';
+import 'package:grocery_user_app/views/screens/home/home_drawer.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/user_model.dart';
+import '../../../models/users/user_model.dart';
 import 'home_fruit_page.dart';
 import 'home_profile_page.dart';
 
@@ -16,11 +17,15 @@ class HomeLungungenPage extends StatefulWidget {
 class _HomeLungungenPageState extends State<HomeLungungenPage> {
   TextEditingController _searchController = TextEditingController();
   int _currentIndex = 0;
-
-  // Define GlobalKey for Scaffold
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  @override
+  void initState() {
+    super.initState();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   Provider.of<UserController>(context, listen: false).fetchUserData();
+    // });
+  }
 
-  // Drawer open function
   void _openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
   }
@@ -29,7 +34,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
   Widget build(BuildContext context) {
     final data = Provider.of<UserController>(context);
     return Scaffold(
-      key: _scaffoldKey,  // Attach GlobalKey to Scaffold
+      key: _scaffoldKey,
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -48,106 +53,80 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            StreamBuilder<UserModel?>(
-              stream: data.userDataStream,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return DrawerHeader(
-                    decoration: BoxDecoration(color: Colors.orange),
-                    child: Center(
-                      child: CircularProgressIndicator(color: Colors.white),
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return DrawerHeader(
-                    decoration: BoxDecoration(color: Colors.orange),
-                    child: Center(
-                      child: Text(
-                        'Error loading user data',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                    ),
-                  );
-                } else if (!snapshot.hasData || snapshot.data == null) {
-                  return DrawerHeader(
-                    decoration: BoxDecoration(color: Colors.orange),
-                    child: Center(
-                      child: Text(
-                        'User data not found.',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                    ),
-                  );
-                } else {
-                  final userData = snapshot.data!;
-                  return DrawerHeader(
-                    decoration: BoxDecoration(color: Colors.orange),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundImage: userData.profilePicture != null
-                              ? NetworkImage(userData.profilePicture!)
-                              : const AssetImage('assets/images/default_profile.png') as ImageProvider,
-                          child: userData.profilePicture == null
-                              ? Icon(Icons.person, size: 40, color: Colors.white)
-                              : null,
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          userData.uname ?? 'User Name',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                        Text(
-                          userData.uemail ?? 'Email',
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                        Text(
-                          userData.phone ?? 'Phone',
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.edit),
-              title: Text('Edit Profile'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileSettingsPage()));
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePageSignInKey()));
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-              onTap: () {
-                // Handle settings action
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.lock),
-              title: Text('Forget Password'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreens2()));
-              },
-            ),
-          ],
-        ),
-      ),
+        drawer: UserDrawer(),
+        // drawer: Drawer(
+        //   child: ListView(
+        //     padding: EdgeInsets.zero,
+        //     children: [
+        //       DrawerHeader(
+        //         decoration: const BoxDecoration(
+        //           color: Colors.orange,
+        //         ),
+        //         child: ListView(
+        //           children: [
+        //             SizedBox(width: 70,
+        //             height: 70,
+        //             child: CircleAvatar()),
+        //             Text("Name:Ajay",style: TextStyle(color: Colors.white),textAlign: TextAlign.center,),
+        //             Text("Email:ajay@gmail.com",style: TextStyle(color: Colors.white),textAlign: TextAlign.center,),
+        //
+        //           ],
+        //         )
+        //       ),
+        //       _createDrawerItem(
+        //         icon: Icons.person,
+        //         text: 'My Profile',
+        //         onTap: () {
+        //           Navigator.pop(context);
+        //
+        //         },
+        //       ),
+        //       _createDrawerItem(
+        //         icon: Icons.book,
+        //         text: 'My Courses',
+        //         onTap: () {
+        //           Navigator.pop(context);
+        //           // Add navigation to Courses screen here
+        //         },
+        //       ),
+        //       _createDrawerItem(
+        //         icon: Icons.workspace_premium,
+        //         text: 'Go Premium',
+        //         onTap: () {
+        //           Navigator.pop(context);
+        //           // Add navigation to Premium screen here
+        //         },
+        //       ),
+        //       _createDrawerItem(
+        //         icon: Icons.video_label,
+        //         text: 'Saved Videos',
+        //         onTap: () {
+        //           Navigator.pop(context);
+        //           // Add navigation to Saved Videos screen here
+        //         },
+        //       ),
+        //       _createDrawerItem(
+        //         icon: Icons.edit,
+        //         text: 'Edit Profile',
+        //         onTap: () {
+        //           Navigator.pop(context);
+        //           // Add navigation to Edit Profile screen here
+        //         },
+        //       ),
+        //       _createDrawerItem(
+        //         icon: Icons.logout,
+        //         text: 'Log Out',
+        //         onTap: () {
+        //           Navigator.pop(context);
+        //           // Add log out functionality here
+        //         },
+        //       ),
+        //     ],
+        //   ),
+        // ),
+
+
+
 
 
 
@@ -324,6 +303,13 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
     );
   }
 }
+Widget _createDrawerItem({required IconData icon, required String text, required GestureTapCallback onTap}) {
+  return ListTile(
+    leading: Icon(icon, color: Colors.orange),
+    title: Text(text, style: TextStyle(fontSize: 16)),
+    onTap: onTap,
+  );
+}
 
 class CategoryItem extends StatelessWidget {
   final String title;
@@ -395,4 +381,5 @@ class DealItem extends StatelessWidget {
       ),
     );
   }
+
 }
