@@ -6,13 +6,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../models/user_model.dart';
+import '../../../models/users/user_model.dart';
 import '../../../views/screens/auth/signup2verify_otp.dart';
 import '../../../views/screens/home/home_lungangen_page.dart';
 
 class UserController with ChangeNotifier {
 
-  UserModel? userData;
   File? profileImage;
   final ImagePicker _picker = ImagePicker();
 
@@ -21,32 +20,41 @@ class UserController with ChangeNotifier {
 
   Stream<UserModel?> get userDataStream => _userDataController.stream;
 
-  void fetchUserData() async {
-    User? currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser != null) {
-      try {
-        DocumentSnapshot userDoc = await _usersCollection.doc(currentUser.uid).get();
-        if (userDoc.exists) {
-          UserModel userData = UserModel.fromJson(userDoc.data() as Map<String, dynamic>);
-          _userDataController.sink.add(userData);
-          notifyListeners();
-        } else {
-          print("User data not found in Firestore.");
-          _userDataController.sink.add(null);
-          notifyListeners();
-        }
-      } catch (error) {
-        print("Error fetching user data: $error");
-        _userDataController.sink.addError(error);
+  UserModel? _userData;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  // Getter for userData
+  UserModel? get userData => _userData;
+
+  UserController() {
+    _initUserListener();
+  }
+
+  void _initUserListener() {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        _listenToUserData(user.uid);
+      } else {
+        _userData = null;
         notifyListeners();
       }
-    } else {
-      print("No user is currently logged in.");
-      _userDataController.sink.add(null);
-      notifyListeners();
-
-    }
+    });
   }
+
+  void _listenToUserData(String uid) {
+    _firestore.collection('users').doc(uid).snapshots().listen(
+          (DocumentSnapshot snapshot) {
+        if (snapshot.exists) {
+          _userData = UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
+          notifyListeners();
+        }
+      },
+      onError: (error) {
+        print("Error fetching user data: $error");
+      },
+    );
+  }
+
 
 
 
@@ -83,8 +91,9 @@ class UserController with ChangeNotifier {
 
         Fluttertoast.showToast(msg: "Account created successfully!");
 
-        // Navigate to home page
+
        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeLungungenPage(),));
+       notifyListeners();
       }
     } catch (error) {
       Fluttertoast.showToast(msg: "Error signing up: ${error.toString()}");
@@ -102,7 +111,10 @@ class UserController with ChangeNotifier {
       print("Error uploading image: $e");
       return "";
     }
+    notifyListeners();
   }
+
+
 
 //// User SignIn
 
@@ -217,6 +229,7 @@ class UserController with ChangeNotifier {
     } else {
       Fluttertoast.showToast(msg: "No image selected.");
     }
+    notifyListeners();
     return null;
   }
 
@@ -235,6 +248,7 @@ class UserController with ChangeNotifier {
     } catch (error) {
       print('Error updating user profile: $error');
     }
+    notifyListeners();
   }
 
 
