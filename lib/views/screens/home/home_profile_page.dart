@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../auth/change_password_screen.dart';
+import '../../../edite_profile_page.dart';
+
 class ProfileSettingsPage extends StatefulWidget {
   @override
   _ProfileSettingsPageState createState() => _ProfileSettingsPageState();
@@ -7,8 +10,8 @@ class ProfileSettingsPage extends StatefulWidget {
 
 class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   int _currentIndex = 0;
-  bool isNotificationsEnabled = true; // For Notifications switch
-  String selectedLanguage = "English"; // For Language setting
+  bool isNotificationsEnabled = true;
+  String selectedLanguage = "English";
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +53,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
               title: Text("Edit Profile"),
               trailing: Icon(Icons.arrow_forward_ios, color: Colors.orange),
               onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileScreen(),));
                 // Navigate to Edit Profile Screen
               },
             ),
@@ -58,6 +62,8 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
               title: Text("Change Password"),
               trailing: Icon(Icons.arrow_forward_ios, color: Colors.orange),
               onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ChangePasswordScreen(),));
+
                 // Navigate to Change Password Screen
               },
             ),

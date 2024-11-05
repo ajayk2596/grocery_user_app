@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_user_app/sign_in_page.dart';
-import 'package:grocery_user_app/signup1.dart';
+import 'package:grocery_user_app/controllers/provider/users/user_controller.dart';
+import 'package:grocery_user_app/views/screens/auth/sign_in_page.dart';
+import 'package:grocery_user_app/views/screens/auth/signup1.dart';
+import 'package:grocery_user_app/views/screens/home/home_drawer.dart';
+import 'package:provider/provider.dart';
 
+import '../../../models/users/user_model.dart';
 import 'home_fruit_page.dart';
 import 'home_profile_page.dart';
 
@@ -13,19 +17,24 @@ class HomeLungungenPage extends StatefulWidget {
 class _HomeLungungenPageState extends State<HomeLungungenPage> {
   TextEditingController _searchController = TextEditingController();
   int _currentIndex = 0;
-
-  // Define GlobalKey for Scaffold
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  @override
+  void initState() {
+    super.initState();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   Provider.of<UserController>(context, listen: false).fetchUserData();
+    // });
+  }
 
-  // Drawer open function
   void _openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
   }
 
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<UserController>(context);
     return Scaffold(
-      key: _scaffoldKey,  // Attach GlobalKey to Scaffold
+      key: _scaffoldKey,
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -39,58 +48,89 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.logout, color: Colors.orange),
+            icon: Icon(Icons.more_vert, color: Colors.orange),
             onPressed: _openDrawer, // Open drawer on logout icon click
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: Colors.orange),
-              child: Text(
-                'Menu',
-                style: TextStyle(color: Colors.white, fontSize: 24),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.edit),
-              title: Text('Edit Profile'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileSettingsPage(),));
+        drawer: UserDrawer(),
+        // drawer: Drawer(
+        //   child: ListView(
+        //     padding: EdgeInsets.zero,
+        //     children: [
+        //       DrawerHeader(
+        //         decoration: const BoxDecoration(
+        //           color: Colors.orange,
+        //         ),
+        //         child: ListView(
+        //           children: [
+        //             SizedBox(width: 70,
+        //             height: 70,
+        //             child: CircleAvatar()),
+        //             Text("Name:Ajay",style: TextStyle(color: Colors.white),textAlign: TextAlign.center,),
+        //             Text("Email:ajay@gmail.com",style: TextStyle(color: Colors.white),textAlign: TextAlign.center,),
+        //
+        //           ],
+        //         )
+        //       ),
+        //       _createDrawerItem(
+        //         icon: Icons.person,
+        //         text: 'My Profile',
+        //         onTap: () {
+        //           Navigator.pop(context);
+        //
+        //         },
+        //       ),
+        //       _createDrawerItem(
+        //         icon: Icons.book,
+        //         text: 'My Courses',
+        //         onTap: () {
+        //           Navigator.pop(context);
+        //           // Add navigation to Courses screen here
+        //         },
+        //       ),
+        //       _createDrawerItem(
+        //         icon: Icons.workspace_premium,
+        //         text: 'Go Premium',
+        //         onTap: () {
+        //           Navigator.pop(context);
+        //           // Add navigation to Premium screen here
+        //         },
+        //       ),
+        //       _createDrawerItem(
+        //         icon: Icons.video_label,
+        //         text: 'Saved Videos',
+        //         onTap: () {
+        //           Navigator.pop(context);
+        //           // Add navigation to Saved Videos screen here
+        //         },
+        //       ),
+        //       _createDrawerItem(
+        //         icon: Icons.edit,
+        //         text: 'Edit Profile',
+        //         onTap: () {
+        //           Navigator.pop(context);
+        //           // Add navigation to Edit Profile screen here
+        //         },
+        //       ),
+        //       _createDrawerItem(
+        //         icon: Icons.logout,
+        //         text: 'Log Out',
+        //         onTap: () {
+        //           Navigator.pop(context);
+        //           // Add log out functionality here
+        //         },
+        //       ),
+        //     ],
+        //   ),
+        // ),
 
-                // Handle edit profile action
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePageSignInKey(),));
-                // Handle logout action
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-              onTap: () {
-                // Handle settings action
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.lock),
-              title: Text('Forget Password'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreens2(),));
 
-                // Handle forget password action
-              },
-            ),
-          ],
-        ),
-      ),
+
+
+
+
+
       body: LayoutBuilder(
         builder: (context, constraints) {
           double screenWidth = constraints.maxWidth;
@@ -263,6 +303,13 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
     );
   }
 }
+Widget _createDrawerItem({required IconData icon, required String text, required GestureTapCallback onTap}) {
+  return ListTile(
+    leading: Icon(icon, color: Colors.orange),
+    title: Text(text, style: TextStyle(fontSize: 16)),
+    onTap: onTap,
+  );
+}
 
 class CategoryItem extends StatelessWidget {
   final String title;
@@ -334,4 +381,5 @@ class DealItem extends StatelessWidget {
       ),
     );
   }
+
 }
