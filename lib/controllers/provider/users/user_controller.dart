@@ -14,7 +14,6 @@ class UserController with ChangeNotifier {
 
   File? profileImage;
   final ImagePicker _picker = ImagePicker();
-
   final CollectionReference _usersCollection = FirebaseFirestore.instance.collection('users');
   final StreamController<UserModel?> _userDataController = StreamController<UserModel?>.broadcast();
 
@@ -31,6 +30,7 @@ class UserController with ChangeNotifier {
   }
 
   void _initUserListener() {
+<<<<<<< Updated upstream
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
         _listenToUserData(user.uid);
@@ -39,14 +39,38 @@ class UserController with ChangeNotifier {
         notifyListeners();
       }
     });
+=======
+    FirebaseAuth.instance.authStateChanges().listen(
+          (User? user) {
+        if (user != null) {
+          _listenToUserData(user.uid);
+        } else {
+          _userData = null;
+          notifyListeners();
+        }
+      },
+      onError: (error) {
+        print("Error in authStateChanges: $error");
+      },
+    );
+>>>>>>> Stashed changes
   }
 
   void _listenToUserData(String uid) {
     _firestore.collection('users').doc(uid).snapshots().listen(
           (DocumentSnapshot snapshot) {
+<<<<<<< Updated upstream
         if (snapshot.exists) {
           _userData = UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
           notifyListeners();
+=======
+        if (snapshot.exists && snapshot.data() != null) {
+          _userData = UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
+          notifyListeners();
+        } else {
+          _userData = null;
+          notifyListeners();
+>>>>>>> Stashed changes
         }
       },
       onError: (error) {
@@ -55,6 +79,15 @@ class UserController with ChangeNotifier {
     );
   }
 
+<<<<<<< Updated upstream
+=======
+  @override
+  void dispose() {
+    _userDataController.close();
+    super.dispose();
+  }
+
+>>>>>>> Stashed changes
 
 
 
@@ -113,6 +146,40 @@ class UserController with ChangeNotifier {
     }
     notifyListeners();
   }
+
+
+  // UpDateUser Profile method
+
+  Future<void> updateUserProfile({
+    required String uid,
+    String? name,
+    String? email,
+    String? phone,
+    File? imageFile, required BuildContext context, required String password,
+  }) async {
+    try {
+      String? imageUrl;
+      if (imageFile != null) {
+        // Re-upload new profile image if changed
+        imageUrl = await _uploadProfileImage(uid, imageFile);
+      }
+
+      // Update the data in Firebase Firestore
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'imageUrl': imageUrl ?? _userData?.imageUrl,
+      });
+
+      Fluttertoast.showToast(msg: "Profile updated successfully!");
+      notifyListeners(); // Notify UI about the updated data
+    } catch (error) {
+      Fluttertoast.showToast(msg: "Error updating profile: ${error.toString()}");
+    }
+  }
+
+
 
 
 

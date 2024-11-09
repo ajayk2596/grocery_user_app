@@ -1,10 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
 import 'package:grocery_user_app/views/screens/auth/register_screen.dart';
+=======
+>>>>>>> Stashed changes
 import 'package:provider/provider.dart';
-
 import '../../../controllers/provider/users/user_controller.dart';
+<<<<<<< Updated upstream
 import '../../../ragister_page.dart';
+=======
+import '../../../register_page.dart';
+>>>>>>> Stashed changes
 
 class EmailLoginScreen extends StatefulWidget {
   const EmailLoginScreen({super.key});
@@ -144,7 +150,12 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Register_page(),));
+<<<<<<< Updated upstream
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Registerpage(),));
+=======
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage(),));
+                    // Handle create account action
+>>>>>>> Stashed changes
                   },
                   child: Text(
                     'Create Account',
