@@ -115,6 +115,40 @@ class UserController with ChangeNotifier {
   }
 
 
+  // UpDateUser Profile method
+
+  Future<void> updateUserProfile({
+    required String uid,
+    String? name,
+    String? email,
+    String? phone,
+    File? imageFile, required BuildContext context, required String password,
+  }) async {
+    try {
+      String? imageUrl;
+      if (imageFile != null) {
+        // Re-upload new profile image if changed
+        imageUrl = await _uploadProfileImage(uid, imageFile);
+      }
+
+      // Update the data in Firebase Firestore
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'imageUrl': imageUrl ?? _userData?.imageUrl,
+      });
+
+      Fluttertoast.showToast(msg: "Profile updated successfully!");
+      notifyListeners(); // Notify UI about the updated data
+    } catch (error) {
+      Fluttertoast.showToast(msg: "Error updating profile: ${error.toString()}");
+    }
+  }
+
+
+
+
 
 //// User SignIn
 

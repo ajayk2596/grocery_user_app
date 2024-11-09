@@ -144,7 +144,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Register_page(),));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Registerpage(),));
                   },
                   child: Text(
                     'Create Account',

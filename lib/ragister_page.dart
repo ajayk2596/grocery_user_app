@@ -6,12 +6,12 @@ import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'controllers/provider/users/user_controller.dart';
 
-class Register_page extends StatefulWidget {
+class Registerpage extends StatefulWidget {
   @override
-  _Register_pageState createState() => _Register_pageState();
+  _RegisterpageState createState() => _RegisterpageState();
 }
 
-class _Register_pageState extends State<Register_page> {
+class _RegisterpageState extends State<Registerpage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();

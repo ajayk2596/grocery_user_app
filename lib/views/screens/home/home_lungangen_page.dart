@@ -48,7 +48,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.more_vert, color: Colors.orange),
+            icon: Icon(Icons.menu_sharp, color: Colors.orange),
             onPressed: _openDrawer, // Open drawer on logout icon click
           ),
         ],
