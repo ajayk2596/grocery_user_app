@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_user_app/controllers/provider/users/user_controller.dart';
-import 'package:grocery_user_app/views/screens/auth/sign_in_page.dart';
-import 'package:grocery_user_app/views/screens/auth/signup1.dart';
 import 'package:grocery_user_app/views/screens/home/home_drawer.dart';
 import 'package:provider/provider.dart';
+<<<<<<< HEAD
+//import 'package:provider/provider.dart';
 
 import '../../../models/users/user_model.dart';
+=======
+>>>>>>> 814e0e10cc42c314df65f7391ff38d9dcaf795aa
 import 'home_fruit_page.dart';
-import 'home_profile_page.dart';
+
 
 class HomeLungungenPage extends StatefulWidget {
   @override
   _HomeLungungenPageState createState() => _HomeLungungenPageState();
 }
+
 
 class _HomeLungungenPageState extends State<HomeLungungenPage> {
   TextEditingController _searchController = TextEditingController();
@@ -21,9 +24,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   Provider.of<UserController>(context, listen: false).fetchUserData();
-    // });
+
   }
 
   void _openDrawer() {
@@ -48,87 +49,12 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.more_vert, color: Colors.orange),
+            icon: Icon(Icons.menu_sharp, color: Colors.orange),
             onPressed: _openDrawer, // Open drawer on logout icon click
           ),
         ],
       ),
         drawer: UserDrawer(),
-        // drawer: Drawer(
-        //   child: ListView(
-        //     padding: EdgeInsets.zero,
-        //     children: [
-        //       DrawerHeader(
-        //         decoration: const BoxDecoration(
-        //           color: Colors.orange,
-        //         ),
-        //         child: ListView(
-        //           children: [
-        //             SizedBox(width: 70,
-        //             height: 70,
-        //             child: CircleAvatar()),
-        //             Text("Name:Ajay",style: TextStyle(color: Colors.white),textAlign: TextAlign.center,),
-        //             Text("Email:ajay@gmail.com",style: TextStyle(color: Colors.white),textAlign: TextAlign.center,),
-        //
-        //           ],
-        //         )
-        //       ),
-        //       _createDrawerItem(
-        //         icon: Icons.person,
-        //         text: 'My Profile',
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //
-        //         },
-        //       ),
-        //       _createDrawerItem(
-        //         icon: Icons.book,
-        //         text: 'My Courses',
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //           // Add navigation to Courses screen here
-        //         },
-        //       ),
-        //       _createDrawerItem(
-        //         icon: Icons.workspace_premium,
-        //         text: 'Go Premium',
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //           // Add navigation to Premium screen here
-        //         },
-        //       ),
-        //       _createDrawerItem(
-        //         icon: Icons.video_label,
-        //         text: 'Saved Videos',
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //           // Add navigation to Saved Videos screen here
-        //         },
-        //       ),
-        //       _createDrawerItem(
-        //         icon: Icons.edit,
-        //         text: 'Edit Profile',
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //           // Add navigation to Edit Profile screen here
-        //         },
-        //       ),
-        //       _createDrawerItem(
-        //         icon: Icons.logout,
-        //         text: 'Log Out',
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //           // Add log out functionality here
-        //         },
-        //       ),
-        //     ],
-        //   ),
-        // ),
-
-
-
-
-
 
 
       body: LayoutBuilder(
@@ -292,6 +218,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
             _currentIndex = index;
           });
         },
+
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Shop'),
           BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),

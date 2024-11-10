@@ -56,8 +56,6 @@ class UserController with ChangeNotifier {
   }
 
 
-
-
  ///////User Sign_up
 
   Future<void> userSignUp(
@@ -91,7 +89,6 @@ class UserController with ChangeNotifier {
 
         Fluttertoast.showToast(msg: "Account created successfully!");
 
-
        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeLungungenPage(),));
        notifyListeners();
       }
@@ -113,6 +110,40 @@ class UserController with ChangeNotifier {
     }
     notifyListeners();
   }
+
+
+  // UpDateUser Profile method
+
+  Future<void> updateUserProfile({
+    required String uid,
+    String? name,
+    String? email,
+    String? phone,
+    File? imageFile, required BuildContext context, required String password,
+  }) async {
+    try {
+      String? imageUrl;
+      if (imageFile != null) {
+        // Re-upload new profile image if changed
+        imageUrl = await _uploadProfileImage(uid, imageFile);
+      }
+
+      // Update the data in Firebase Firestore
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'imageUrl': imageUrl ?? _userData?.imageUrl,
+      });
+
+      Fluttertoast.showToast(msg: "Profile updated successfully!");
+      notifyListeners(); // Notify UI about the updated data
+    } catch (error) {
+      Fluttertoast.showToast(msg: "Error updating profile: ${error.toString()}");
+    }
+  }
+
+
 
 
 
@@ -236,10 +267,7 @@ class UserController with ChangeNotifier {
 
   // Add or update user information in Firestore
   Future<void> addOrUpdateUserData(String userId, UserModel user) async {
-   // String? downloadUrl = await uploadImage(userId);
-   //  if (downloadUrl != null) {
-   //    user.profilePicture = downloadUrl;
-   //  }
+
 
     try {
       await _usersCollection.doc(userId).set(user.toJson(), SetOptions(merge: true));
