@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:grocery_user_app/controllers/provider/users/user_controller.dart';
 import 'package:grocery_user_app/views/screens/home/home_drawer.dart';
 import 'package:provider/provider.dart';
+
+//import 'package:provider/provider.dart';
+
+import '../../../models/users/user_model.dart';
+
 import 'home_fruit_page.dart';
 
 
@@ -49,81 +54,6 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
         ],
       ),
         drawer: UserDrawer(),
-        // drawer: Drawer(
-        //   child: ListView(
-        //     padding: EdgeInsets.zero,
-        //     children: [
-        //       DrawerHeader(
-        //         decoration: const BoxDecoration(
-        //           color: Colors.orange,
-        //         ),
-        //         child: ListView(
-        //           children: [
-        //             SizedBox(width: 70,
-        //             height: 70,
-        //             child: CircleAvatar()),
-        //             Text("Name:Ajay",style: TextStyle(color: Colors.white),textAlign: TextAlign.center,),
-        //             Text("Email:ajay@gmail.com",style: TextStyle(color: Colors.white),textAlign: TextAlign.center,),
-        //
-        //           ],
-        //         )
-        //       ),
-        //       _createDrawerItem(
-        //         icon: Icons.person,
-        //         text: 'My Profile',
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //
-        //         },
-        //       ),
-        //       _createDrawerItem(
-        //         icon: Icons.book,
-        //         text: 'My Courses',
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //           // Add navigation to Courses screen here
-        //         },
-        //       ),
-        //       _createDrawerItem(
-        //         icon: Icons.workspace_premium,
-        //         text: 'Go Premium',
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //           // Add navigation to Premium screen here
-        //         },
-        //       ),
-        //       _createDrawerItem(
-        //         icon: Icons.video_label,
-        //         text: 'Saved Videos',
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //           // Add navigation to Saved Videos screen here
-        //         },
-        //       ),
-        //       _createDrawerItem(
-        //         icon: Icons.edit,
-        //         text: 'Edit Profile',
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //           // Add navigation to Edit Profile screen here
-        //         },
-        //       ),
-        //       _createDrawerItem(
-        //         icon: Icons.logout,
-        //         text: 'Log Out',
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //           // Add log out functionality here
-        //         },
-        //       ),
-        //     ],
-        //   ),
-        // ),
-
-
-
-
-
 
 
       body: LayoutBuilder(

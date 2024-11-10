@@ -267,10 +267,7 @@ class UserController with ChangeNotifier {
 
   // Add or update user information in Firestore
   Future<void> addOrUpdateUserData(String userId, UserModel user) async {
-   // String? downloadUrl = await uploadImage(userId);
-   //  if (downloadUrl != null) {
-   //    user.profilePicture = downloadUrl;
-   //  }
+
 
     try {
       await _usersCollection.doc(userId).set(user.toJson(), SetOptions(merge: true));
