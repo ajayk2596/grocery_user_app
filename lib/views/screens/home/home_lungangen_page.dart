@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_user_app/controllers/provider/users/user_controller.dart';
-import 'package:grocery_user_app/views/screens/auth/sign_in_page.dart';
-import 'package:grocery_user_app/views/screens/auth/signup1.dart';
 import 'package:grocery_user_app/views/screens/home/home_drawer.dart';
 import 'package:provider/provider.dart';
-
-<<<<<<< Updated upstream
-import '../../../models/users/user_model.dart';
-=======
->>>>>>> Stashed changes
 import 'home_fruit_page.dart';
-import 'home_profile_page.dart';
+
 
 class HomeLungungenPage extends StatefulWidget {
   @override
   _HomeLungungenPageState createState() => _HomeLungungenPageState();
 }
+
 
 class _HomeLungungenPageState extends State<HomeLungungenPage> {
   TextEditingController _searchController = TextEditingController();
@@ -24,9 +18,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   Provider.of<UserController>(context, listen: false).fetchUserData();
-    // });
+
   }
 
   void _openDrawer() {
@@ -35,7 +27,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
 
   @override
   Widget build(BuildContext context) {
-   // final data = Provider.of<UserController>(context);
+    final data = Provider.of<UserController>(context);
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset: true,
@@ -56,7 +48,6 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
           ),
         ],
       ),
-<<<<<<< Updated upstream
         drawer: UserDrawer(),
         // drawer: Drawer(
         //   child: ListView(
@@ -131,86 +122,9 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
 
 
 
-=======
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            Consumer<UserController>(
-              builder: (context, userController, child) {
-                final userData = userController.userData;
 
-                // Check if user data is available
-                return DrawerHeader(
-                  decoration: BoxDecoration(color: Colors.orange),
-                  child: userData != null
-                      ? Flexible(
-                        child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundImage: userData.profilePicture != null
-                              ? NetworkImage(userData.profilePicture!)
-                              : AssetImage('assets/images/default_profile.png') as ImageProvider,
-                          child: userData.profilePicture == null
-                              ? Icon(Icons.person, size: 40, color: Colors.white)
-                              : null,
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          userData.uname ?? 'User Name',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                        Text(
-                          userData.uemail ?? 'Email',
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                        Text(
-                          userData.phone ?? 'Phone',
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                                            ],
-                                          ),
-                      )
-                      : Center(
-                    child: CircularProgressIndicator(color: Colors.white),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.edit),
-              title: Text('Edit Profile'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileSettingsPage()));
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePageSignInKey()));
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-              onTap: () {
-                // Handle settings action
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.lock),
-              title: Text('Forget Password'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreens2()));
-              },
-            ),
-          ],
-        ),
-      ),
->>>>>>> Stashed changes
+
+
 
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -373,6 +287,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
             _currentIndex = index;
           });
         },
+
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Shop'),
           BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),

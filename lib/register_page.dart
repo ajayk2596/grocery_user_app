@@ -6,29 +6,20 @@ import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'controllers/provider/users/user_controller.dart';
 
-<<<<<<<< Updated upstream:lib/ragister_page.dart
-class Registerpage extends StatefulWidget {
-  @override
-  _RegisterpageState createState() => _RegisterpageState();
-}
-
-class _RegisterpageState extends State<Registerpage> {
-========
 class RegisterPage extends StatefulWidget {
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
->>>>>>>> Stashed changes:lib/register_page.dart
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final String userId = "unique_user_id";
   bool _isPasswordVisible = false;
-  void _togglePasswordVisibility() {
 
+  void _togglePasswordVisibility() {
     setState(() {
       _isPasswordVisible = !_isPasswordVisible;
     });
@@ -38,7 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Please Your Choose Image"),
+        title: Text("Please Choose Your Image"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -93,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 backgroundImage: data.profileImage != null
                     ? FileImage(data.profileImage!)
                     : (data.userData?.imageUrl != null
-                    ? NetworkImage(data.userData!.imageUrl! as String)
+                    ? NetworkImage(data.userData!.imageUrl!)
                     : null) as ImageProvider?,
                 child: data.profileImage == null &&
                     (data.userData?.imageUrl == null)
@@ -106,11 +97,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 nameController, 'Name', Icons.person, TextInputType.name, null),
             SizedBox(height: 15),
             _buildTextField(emailController, 'Email', Icons.email,
-                TextInputType.emailAddress,null),
+                TextInputType.emailAddress, null),
             SizedBox(height: 15),
             _buildTextField(
-
-                phoneController, 'Phone', Icons.phone, TextInputType.phone,10),
+                phoneController, 'Phone', Icons.phone, TextInputType.phone, 10),
             SizedBox(height: 15),
             _buildPasswordTextField(passwordController, 'Password'),
             SizedBox(height: 20),
@@ -120,15 +110,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 onPressed: () async {
                   await data.userSignUp(
                     context: context,
-                    name:nameController.text,
-                    email:emailController.text,
-                    password:passwordController.text,
-                    phone:phoneController.text,
-                    imageFile:data.profileImage
-
-
+                    name: nameController.text,
+                    email: emailController.text,
+                    password: passwordController.text,
+                    phone: phoneController.text,
+                    imageFile: data.profileImage,
                   );
-
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,
@@ -167,22 +154,18 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-
   Widget _buildTextField(
       TextEditingController controller,
       String hintText,
       IconData icon,
       TextInputType keyboardType,
-      int? maxLength, // Nullable maxLength parameter
-      ) {
+      int? maxLength) {
     return Card(
       elevation: 2,
-
       child: TextField(
         controller: controller,
         keyboardType: keyboardType,
         maxLength: maxLength,
-
         decoration: InputDecoration(
           hintText: hintText,
           prefixIcon: Icon(icon, color: Colors.orange),
