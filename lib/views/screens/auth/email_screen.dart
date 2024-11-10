@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery_user_app/views/screens/auth/register_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controllers/provider/users/user_controller.dart';
@@ -144,7 +143,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Register_page(),));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Registerpage(),));
                   },
                   child: Text(
                     'Create Account',
