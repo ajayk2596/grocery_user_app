@@ -46,7 +46,7 @@ class _EditProfileState extends State<EditProfile> {
 
       // Define a storage reference path using the UID
       final Reference storageRef = FirebaseStorage.instance
-          .ref().child('profilePictures/$cId'); // Fixed path
+          .ref().child('profilePictures/$cId'); // Fixed paths
 
       // Upload the new file (this will overwrite the existing image)
       await storageRef.putFile(_imageFile!);
