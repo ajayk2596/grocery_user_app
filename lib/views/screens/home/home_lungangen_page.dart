@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:grocery_user_app/controllers/provider/users/user_controller.dart';
 import 'package:grocery_user_app/views/screens/home/home_drawer.dart';
 import 'package:provider/provider.dart';
-<<<<<<< HEAD
+
 //import 'package:provider/provider.dart';
 
 import '../../../models/users/user_model.dart';
-=======
->>>>>>> 814e0e10cc42c314df65f7391ff38d9dcaf795aa
+
 import 'home_fruit_page.dart';
 
 
