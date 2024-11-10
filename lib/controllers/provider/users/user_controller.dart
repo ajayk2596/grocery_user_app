@@ -14,6 +14,7 @@ class UserController with ChangeNotifier {
 
   File? profileImage;
   final ImagePicker _picker = ImagePicker();
+
   final CollectionReference _usersCollection = FirebaseFirestore.instance.collection('users');
   final StreamController<UserModel?> _userDataController = StreamController<UserModel?>.broadcast();
 
@@ -30,7 +31,6 @@ class UserController with ChangeNotifier {
   }
 
   void _initUserListener() {
-<<<<<<< Updated upstream
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
         _listenToUserData(user.uid);
@@ -39,38 +39,14 @@ class UserController with ChangeNotifier {
         notifyListeners();
       }
     });
-=======
-    FirebaseAuth.instance.authStateChanges().listen(
-          (User? user) {
-        if (user != null) {
-          _listenToUserData(user.uid);
-        } else {
-          _userData = null;
-          notifyListeners();
-        }
-      },
-      onError: (error) {
-        print("Error in authStateChanges: $error");
-      },
-    );
->>>>>>> Stashed changes
   }
 
   void _listenToUserData(String uid) {
     _firestore.collection('users').doc(uid).snapshots().listen(
           (DocumentSnapshot snapshot) {
-<<<<<<< Updated upstream
         if (snapshot.exists) {
           _userData = UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
           notifyListeners();
-=======
-        if (snapshot.exists && snapshot.data() != null) {
-          _userData = UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
-          notifyListeners();
-        } else {
-          _userData = null;
-          notifyListeners();
->>>>>>> Stashed changes
         }
       },
       onError: (error) {
@@ -78,17 +54,6 @@ class UserController with ChangeNotifier {
       },
     );
   }
-
-<<<<<<< Updated upstream
-=======
-  @override
-  void dispose() {
-    _userDataController.close();
-    super.dispose();
-  }
-
->>>>>>> Stashed changes
-
 
 
  ///////User Sign_up
@@ -123,7 +88,6 @@ class UserController with ChangeNotifier {
         });
 
         Fluttertoast.showToast(msg: "Account created successfully!");
-
 
        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeLungungenPage(),));
        notifyListeners();
