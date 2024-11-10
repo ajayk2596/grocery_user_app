@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Text(
             "Welcome To Grocery",
             style: TextStyle(
-              color: Colors.red,
+              color: Colors.orange,
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),
@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
           SizedBox(height: 20),
           CircularProgressIndicator(
             backgroundColor: Colors.white,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
             strokeWidth: 5,
           ),
         ],

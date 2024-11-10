@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_user_app/controllers/provider/users/user_controller.dart';
-import 'package:grocery_user_app/views/screens/auth/sign_in_page.dart';
-import 'package:grocery_user_app/views/screens/auth/signup1.dart';
 import 'package:grocery_user_app/views/screens/home/home_drawer.dart';
 import 'package:provider/provider.dart';
-
-import '../../../models/users/user_model.dart';
 import 'home_fruit_page.dart';
-import 'home_profile_page.dart';
+
 
 class HomeLungungenPage extends StatefulWidget {
   @override
   _HomeLungungenPageState createState() => _HomeLungungenPageState();
 }
+
 
 class _HomeLungungenPageState extends State<HomeLungungenPage> {
   TextEditingController _searchController = TextEditingController();
@@ -21,9 +18,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   Provider.of<UserController>(context, listen: false).fetchUserData();
-    // });
+
   }
 
   void _openDrawer() {
@@ -48,7 +43,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.more_vert, color: Colors.orange),
+            icon: Icon(Icons.menu_sharp, color: Colors.orange),
             onPressed: _openDrawer, // Open drawer on logout icon click
           ),
         ],
@@ -292,6 +287,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
             _currentIndex = index;
           });
         },
+
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Shop'),
           BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
