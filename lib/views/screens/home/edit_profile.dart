@@ -80,7 +80,7 @@ class _EditProfileState extends State<EditProfile> {
         else if(snapshot.hasData){
           var data= snapshot.data;
           return ListView.builder(
-            itemCount: data?.docs.length,
+            itemCount: 1,
             itemBuilder: (context, index){
              return  Center(
                child: Column(
@@ -91,9 +91,8 @@ class _EditProfileState extends State<EditProfile> {
 
                   CircleAvatar(
                     maxRadius: 50,
-                    backgroundImage:  NetworkImage(data?.docs[index]["imageUrl"]),
+                    backgroundImage: NetworkImage(data?.docs[index]["imageUrl"]),
                   ),
-
                   Text(data?.docs[index]["name"]),
                   Text(data?.docs[index]["email"]),
                   Text(data?.docs[index]["phone"]),
@@ -121,15 +120,13 @@ class _EditProfileState extends State<EditProfile> {
                                        width: 80,
                                        decoration: BoxDecoration(
                                          shape: BoxShape.circle,
-                                         //borderRadius: BorderRadius.circular(65),
-                                         color: Colors.grey,
+                                          color: Colors.grey,
                                          image: DecorationImage(
                                              image: FileImage(_imageFile!)),
                                        ),
                                      ),
                                    ),
                                  ),
-
 
                                  Text('Update Data',style: TextStyle(color: Colors.orange,fontSize: 25),),
                                  SizedBox(height: 5,),
@@ -164,7 +161,7 @@ class _EditProfileState extends State<EditProfile> {
                                    Navigator.pop(context);
                                    setState(() {});
                                  await  updateData(data?.docs[index]["uid"]).then((value) {
-                                   //_updateImage(data?.docs[index]["uid"]);
+                                   _updateImage(data?.docs[index]["uid"]);
                                    Fluttertoast.showToast(msg: 'Update Successfull');
                                  },).onError((error, stackTrace) {
                                    Fluttertoast.showToast(msg: 'Update failled');
