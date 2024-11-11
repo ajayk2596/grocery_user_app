@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:grocery_user_app/controllers/auth/auth_controller.dart';
 
 import 'package:grocery_user_app/splash_screen.dart';
+import 'package:grocery_user_app/views/screens/home/home_item_page.dart';
 import 'package:grocery_user_app/views/screens/home/home_lungangen_page.dart';
+import 'package:grocery_user_app/views/screens/home/order_accepeted_screen.dart';
 import 'package:provider/provider.dart';
 //import 'package:provider/provider.dart
 import 'RegisterScreen/register_screen.dart';
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(create: (Contxte)=> UserController(),
       child:  MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        home: OrderAcceptedScreen(),
       ),);
 
 
