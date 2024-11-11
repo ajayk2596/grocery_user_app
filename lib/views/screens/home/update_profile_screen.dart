@@ -102,7 +102,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           icon: const Icon(Icons.arrow_back_ios, color: Colors.orange),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
+        title: const Text(
           "Edit Profile",
           style: TextStyle(color: Colors.orange, fontSize: 24, fontWeight: FontWeight.bold),
         ),
