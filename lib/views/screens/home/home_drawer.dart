@@ -11,9 +11,24 @@ import 'package:grocery_user_app/views/screens/home/update_profile_screen.dart';
 
 import '../../../models/users/user_model.dart';
 
-class UserDrawer extends StatelessWidget {
+class UserDrawer extends StatefulWidget {
   const UserDrawer({Key? key}) : super(key: key);
 
+  @override
+  State<UserDrawer> createState() => _UserDrawerState();
+}
+
+class _UserDrawerState extends State<UserDrawer> {
+  bool showProgress = true;
+@override
+  void initState() {
+  Future.delayed(Duration(seconds: 5), () {
+    setState(() {
+      showProgress = false;
+    });
+  });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -30,7 +45,7 @@ class UserDrawer extends StatelessWidget {
                 return const DrawerHeader(
                   decoration: BoxDecoration(color: Colors.orange),
                   child: Center(
-                    child: CircularProgressIndicator(color: Colors.white),
+                    child: CircularProgressIndicator(color: Colors.red),
                   ),
                 );
               }
@@ -58,6 +73,7 @@ class UserDrawer extends StatelessWidget {
                 );
               }
 
+
               Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
               UserModel user = UserModel.fromJson(data);
@@ -69,14 +85,29 @@ class UserDrawer extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundColor: Colors.grey[200],
-                        backgroundImage: _getBackgroundImage(user.imageUrl),
-                        child: _shouldShowDefaultIcon(user.imageUrl)
-                            ? const Icon(Icons.person, size: 40, color: Colors.white)
-                            : null,
-                      ),
+                    CircleAvatar(
+                    radius: 40,
+                    backgroundColor: Colors.grey[200],
+                    backgroundImage: _getBackgroundImage(user.imageUrl),
+                    child: showProgress
+                        ? CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+                    )
+                        : (_shouldShowDefaultIcon(user.imageUrl)
+                        ? const Icon(Icons.person, size: 40, color: Colors.white,)
+                        : null),
+                  ),
+
+                      //first code
+                      // CircleAvatar(
+                      //   radius: 40,
+                      //   backgroundColor: Colors.grey[200],
+                      //   backgroundImage: _getBackgroundImage(user.imageUrl),
+                      //   child: _shouldShowDefaultIcon(user.imageUrl)
+                      //       ? const Icon(Icons.person, size: 40, color: Colors.white)
+                      //       : null,
+                      // ),
+
                       const SizedBox(height: 0),
                       Text(
                         user.name ?? 'Name not set',
@@ -137,7 +168,7 @@ class UserDrawer extends StatelessWidget {
             onTap: () {
 
               //Navigator.pop(context);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile(),));
+              //Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile(),));
 
               Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileScreen() ,));
 
