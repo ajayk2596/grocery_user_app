@@ -79,17 +79,32 @@ class _RegisterPageState extends State<RegisterPage> {
           children: [
             GestureDetector(
               onTap: () => _showImageSourceDialog(data),
-              child: CircleAvatar(
-                radius: 60,
-                backgroundImage: data.profileImage != null
-                    ? FileImage(data.profileImage!)
-                    : (data.userData?.imageUrl != null
-                    ? NetworkImage(data.userData!.imageUrl!)
-                    : null) as ImageProvider?,
-                child: data.profileImage == null &&
-                    (data.userData?.imageUrl == null)
-                    ? Icon(Icons.person, size: 60, color: Colors.grey)
-                    : null,
+              child: Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundImage: data.profileImage != null
+                        ? FileImage(data.profileImage!)
+                        : (data.userData?.imageUrl != null
+                        ? NetworkImage(data.userData!.imageUrl!)
+                        : null) as ImageProvider?,
+                    child: data.profileImage == null &&
+                        (data.userData?.imageUrl == null)
+                        ? Icon(Icons.person, size: 60, color: Colors.grey)
+                        : null,
+                  ),
+                  if (data.profileImage == null &&
+                      (data.userData?.imageUrl == null))
+                    Positioned(
+                      bottom: 5,
+                      right: 5,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.orange,
+                        size: 24,
+                      ),
+                    ),
+                ],
               ),
             ),
             SizedBox(height: 20),
@@ -116,6 +131,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     phone: phoneController.text,
                     imageFile: data.profileImage,
                   );
+
+                  // Reset the profile image to show default if no image was selected
+                  if (data.profileImage == null) {
+                    setState(() {});
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,

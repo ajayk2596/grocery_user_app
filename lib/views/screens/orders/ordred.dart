@@ -141,7 +141,7 @@ class _OrderedState extends State<Ordered> {
                               Step(
                                 title: Row(
                                   children: [
-                                    Image.asset('assets/images/order.png',height: screenHeight*0.07,),
+                                    Image.asset('assets/images/receive.png',height: screenHeight*0.07,),
                                     SizedBox(width: 13,),
                                     FittedBox(child: Text('Your Order is recived.',style: TextStyle(fontSize:  screenWidth*0.05),)),
                                   ],

@@ -1,14 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EditAddress extends StatefulWidget {
   const EditAddress({super.key});
 
   @override
-  State<EditAddress> createState() => _NewAddressState();
+  State<EditAddress> createState() => _EditAddressState();
 }
 
-class _NewAddressState extends State<EditAddress> {
+class _EditAddressState extends State<EditAddress> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -16,106 +15,48 @@ class _NewAddressState extends State<EditAddress> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(
-          Icons.arrow_back_ios_new_outlined,
-          color: Colors.orange,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.orange),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
+        title: Text('Edit Address', style: TextStyle(color: Colors.orange, fontSize: screenWidth * 0.06, fontWeight: FontWeight.bold)),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Edit Address', style: TextStyle(color: Colors.orange, fontSize: screenWidth * 0.08),
-              ),
+              SizedBox(height: screenHeight * 0.04),
+              _buildTextField("Address Type", "Home", true),
+              SizedBox(height: screenHeight * 0.03),
+              _buildTextField("Street Address", "Mati egh"),
+              SizedBox(height: screenHeight * 0.03),
+              _buildTextField("City", "Goteborg", true),
+              SizedBox(height: screenHeight * 0.03),
+              _buildTextField("Area", "Lungangen"),
+              SizedBox(height: screenHeight * 0.15),
               SizedBox(
-                height: screenHeight * 0.09,
-              ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Container(
-                  width: screenWidth * 0.9,
-                  height: screenHeight * 0.07,
-                  color: Colors.grey[400],
-                  child: TextField(
-                    decoration: InputDecoration(
-                      suffixIcon: Icon(CupertinoIcons.arrowtriangle_down_fill),
-                      contentPadding: const EdgeInsets.only(top: 15,left: 15),
-                      hintText: "Home",
-                      border: InputBorder.none,
-                    ),
+                width: double.infinity,
+                height: screenHeight * 0.07,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                    padding: EdgeInsets.symmetric(vertical: 15),
                   ),
-                ),
-              ),
-              SizedBox(
-                height: screenHeight * 0.05,
-              ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Container(
-                  width: screenWidth * 0.9,
-                  height: screenHeight * 0.07,
-                  color: Colors.grey[400],
-                  child: TextField(
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.only(top: 15,left: 15),
-                      hintText: "Mati egh",
-                      border: InputBorder.none,
-                    ),
+                  onPressed: () {
+                    // Handle Update Address action
+                  },
+                  child: Text(
+                    "Update Address",
+                    style: TextStyle(fontSize: screenWidth * 0.05, color: Colors.white, fontWeight: FontWeight.bold),
                   ),
-                ),
-              ),
-              SizedBox(
-                height: screenHeight * 0.05,
-              ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Container(
-                  width: screenWidth * 0.9,
-                  height: screenHeight * 0.07,
-                  color: Colors.grey[400],
-                  child: TextField(
-                    decoration: InputDecoration(
-                      suffixIcon: Icon(Icons.upgrade_rounded),
-                      contentPadding: const EdgeInsets.only(top: 15,left: 15),
-                      hintText: "Goteborg",
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: screenHeight * 0.03,),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Container(
-                  width: screenWidth * 0.9,
-                  height: screenHeight * 0.07,
-                  color: Colors.grey[400],
-                  child: TextField(
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.only(top: 15,left: 15),
-                      hintText: "Lungangen",
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: screenHeight * 0.2,),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(25),
-                child: Container(
-                  width: screenWidth * 0.9,
-                  height: screenHeight * 0.07,
-                  color: Colors.orange,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange),
-                      onPressed: () {
-                        //Navigator.push(context, MaterialPageRoute(builder: (context) => NoSavedCard(),));
-                      },
-                      child: Text("UpdateAddress",
-                          style: TextStyle(
-                              fontSize: screenWidth * 0.05,
-                              color: Colors.white))),
                 ),
               ),
             ],
@@ -123,6 +64,35 @@ class _NewAddressState extends State<EditAddress> {
         ),
       ),
     );
+  }
 
+  Widget _buildTextField(String label, String hint, [bool hasDropdown = false]) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(color: Colors.orange[700], fontSize: 16, fontWeight: FontWeight.w500),
+        ),
+        SizedBox(height: 8),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            color: Colors.grey[200],
+            child: Card(
+              elevation: 2,
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: hint,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  border: InputBorder.none,
+                  suffixIcon: hasDropdown ? Icon(Icons.arrow_drop_down_sharp, color: Colors.orange) : null,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
