@@ -8,10 +8,10 @@ class ItemsScreen extends StatefulWidget {
 class _ItemsScreenState extends State<ItemsScreen> {
   // Sample data for the items
   final List<Item> items = [
-    Item(name: 'Red Apple', price: 4.99, unit: 'kg', quantity: 2,  imagePath: 'assets/images/Apple.png',),
-    Item(name: 'Original Banana', price: 5.99, unit: 'kg', quantity: 2, imagePath: 'assets/images/Banana.png',),
-    Item(name: 'Avocado Bowl', price: 24.00, unit: 'st', quantity: 1, imagePath: 'assets/images/Bowl.png',),
-    Item(name: 'Salmon', price: 50.00, unit: 'kg', quantity: 2, imagePath: 'assets/images/meet.png',),
+    Item(name: 'Red Apple', price: 4.99, unit: 'kg', quantity: 2, imagePath: 'assets/images/Apple.png'),
+    Item(name: 'Original Banana', price: 5.99, unit: 'kg', quantity: 2, imagePath: 'assets/images/Banana.png'),
+    Item(name: 'Avocado Bowl', price: 24.00, unit: 'st', quantity: 1, imagePath: 'assets/images/Bowl.png'),
+    Item(name: 'Salmon', price: 50.00, unit: 'kg', quantity: 2, imagePath: 'assets/images/meet.png'),
   ];
 
   @override
@@ -57,7 +57,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.network(item.imagePath, width: 50, height: 50),
+          Image.asset(item.imagePath, width: 50, height: 50), // Use Image.asset here
           SizedBox(width: 10),
           Expanded(
             child: Text(
