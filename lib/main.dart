@@ -26,15 +26,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return ChangeNotifierProvider(create: (Contxte)=> UserController(),
-      child: MaterialApp(
+      child:  MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomeLungungenPage(),
+        home: SplashScreen(),
       ),);
 
-     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:RegisterScreen()
-    );
+
 
   }
 }
