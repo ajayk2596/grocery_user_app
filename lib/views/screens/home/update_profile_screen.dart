@@ -96,11 +96,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     final userController = Provider.of<UserController>(context);
     final userData = userController.userData;
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.orange),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.orange),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
