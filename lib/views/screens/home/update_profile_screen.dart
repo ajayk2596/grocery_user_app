@@ -66,7 +66,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Choose an Image"),
+        title: const Text("Choose an Image"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
