@@ -21,14 +21,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigateBasedOnAuth() {
-    // Check if a user is already signed in
     User? currentUser = FirebaseAuth.instance.currentUser;
-
     if (currentUser != null) {
-      // User is signed in, navigate to profile page
    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>HomeLungungenPage() ,));
     } else {
-      // No user is signed in, navigate to login screen
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EmailLoginScreen(),));
     }
   }

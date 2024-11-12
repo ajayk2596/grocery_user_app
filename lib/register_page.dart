@@ -12,6 +12,10 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+
+  bool isLoading = false;
+
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -66,7 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
               Navigator.pop(context);
             },
             icon: Icon(CupertinoIcons.back, color: Colors.orange)),
-        title: Text("Register",
+             title: Text("Register",
             style: TextStyle(
                 color: Colors.orange,
                 fontSize: 30,
@@ -119,10 +123,17 @@ class _RegisterPageState extends State<RegisterPage> {
             SizedBox(height: 15),
             _buildPasswordTextField(passwordController, 'Password'),
             SizedBox(height: 20),
+
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
+
+              child:
+              ElevatedButton(
                 onPressed: () async {
+                  setState(() {
+                    isLoading = true; // Start loading
+                  });
+
                   await data.userSignUp(
                     context: context,
                     name: nameController.text,
@@ -132,21 +143,62 @@ class _RegisterPageState extends State<RegisterPage> {
                     imageFile: data.profileImage,
                   );
 
+
+                  setState(() {
+                    isLoading = false; // Stop loading
+
                   // Reset the profile image to show default if no image was selected
                   if (data.profileImage == null) {
                     setState(() {});
                   }
+
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0)),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
                   padding: EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: Text('Save',
-                    style: TextStyle(fontSize: 16, color: Colors.white)),
+                child: isLoading
+                    ? CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                )
+                    : Text(
+                  'Save',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
               ),
+
+
+
+              // ElevatedButton(
+              //   onPressed: () async {
+              //     await data.userSignUp(
+              //       context: context,
+              //       name: nameController.text,
+              //       email: emailController.text,
+              //       password: passwordController.text,
+              //       phone: phoneController.text,
+              //       imageFile: data.profileImage,
+              //     );
+              //   },
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: Colors.orange,
+              //     shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(12.0)),
+              //     padding: EdgeInsets.symmetric(vertical: 16),
+              //   ),
+              //   child: Text('Save',
+              //       style: TextStyle(fontSize: 16, color: Colors.white)),
+              // )
+
+
+
+
             ),
+
+
             SizedBox(height: 20),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
