@@ -3,10 +3,8 @@ import 'package:grocery_user_app/controllers/provider/users/user_controller.dart
 import 'package:grocery_user_app/views/screens/home/home_drawer.dart';
 import 'package:provider/provider.dart';
 
-//import 'package:provider/provider.dart';
 
-import '../../../models/users/user_model.dart';
-
+import 'home_account_page.dart';
 import 'home_fruit_page.dart';
 
 
@@ -215,8 +213,15 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
           setState(() {
             _currentIndex = index;
           });
-        },
 
+          // Navigate to HomeAccountScreen when the "Account" button is clicked
+          if (index == 4) {  // Index of the "Account" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeAccountSreen()),
+            );
+          }
+        },
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Shop'),
           BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
