@@ -23,9 +23,11 @@ class Address extends StatefulWidget {
          Navigator.push(context, MaterialPageRoute(builder: (context) => EditAddress(),));
        }, icon: Icon(Icons.add,color: Colors.orange,))
          ],
-         leading: const Icon(
-           Icons.arrow_back_ios_new_outlined,
-           color: Colors.orange,
+         leading: IconButton(
+           icon: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.orange),
+           onPressed: () {
+             Navigator.pop(context);
+           },
          ),
        ),
         body: Column(
@@ -40,16 +42,16 @@ class Address extends StatefulWidget {
             ),
             ListTile(
               leading: Image.asset('assets/images/home.png',height: screenHeight*0.03,),
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold),),
+              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.orange),),
               subtitle: Text('Lungangen 6,41722'),
-              trailing: Icon(CupertinoIcons.right_chevron),
+              trailing: Icon(CupertinoIcons.right_chevron,color: Colors.orange,),
              ),
             Divider(),
             ListTile(
               leading: Image.asset('assets/images/office.png',height: screenHeight*0.03,),
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold),),
+              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.orange),),
               subtitle: Text('Lungangen 6,41722'),
-              trailing: Icon(CupertinoIcons.right_chevron),
+              trailing: Icon(CupertinoIcons.right_chevron,color: Colors.orange,),
             ),
             Divider(),
 

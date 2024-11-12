@@ -1,31 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_user_app/sign_in_page.dart';
-import 'package:grocery_user_app/signup1.dart';
+import 'package:grocery_user_app/controllers/provider/users/user_controller.dart';
+import 'package:grocery_user_app/views/screens/home/home_drawer.dart';
+import 'package:provider/provider.dart';
 
+
+import 'home_account_page.dart';
 import 'home_fruit_page.dart';
-import 'home_profile_page.dart';
+
 
 class HomeLungungenPage extends StatefulWidget {
   @override
   _HomeLungungenPageState createState() => _HomeLungungenPageState();
 }
 
+
 class _HomeLungungenPageState extends State<HomeLungungenPage> {
   TextEditingController _searchController = TextEditingController();
   int _currentIndex = 0;
-
-  // Define GlobalKey for Scaffold
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  @override
+  void initState() {
+    super.initState();
 
-  // Drawer open function
+  }
+
   void _openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
   }
 
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<UserController>(context);
     return Scaffold(
-      key: _scaffoldKey,  // Attach GlobalKey to Scaffold
+      key: _scaffoldKey,
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -39,58 +46,14 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.logout, color: Colors.orange),
+            icon: Icon(Icons.menu_sharp, color: Colors.orange),
             onPressed: _openDrawer, // Open drawer on logout icon click
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: Colors.orange),
-              child: Text(
-                'Menu',
-                style: TextStyle(color: Colors.white, fontSize: 24),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.edit),
-              title: Text('Edit Profile'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileSettingsPage(),));
+        drawer: UserDrawer(),
 
-                // Handle edit profile action
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePageSignInKey(),));
-                // Handle logout action
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-              onTap: () {
-                // Handle settings action
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.lock),
-              title: Text('Forget Password'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreens2(),));
 
-                // Handle forget password action
-              },
-            ),
-          ],
-        ),
-      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           double screenWidth = constraints.maxWidth;
@@ -145,7 +108,6 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
                     child: Row(
                       children: [
                         InkWell(
-
                           child: CategoryItem(
                             title: 'Fruits',
                             imagePath: 'assets/images/Grapes.png',
@@ -251,6 +213,14 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
           setState(() {
             _currentIndex = index;
           });
+
+          // Navigate to HomeAccountScreen when the "Account" button is clicked
+          if (index == 4) {  // Index of the "Account" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeAccountSreen()),
+            );
+          }
         },
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Shop'),
@@ -262,6 +232,13 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
       ),
     );
   }
+}
+Widget _createDrawerItem({required IconData icon, required String text, required GestureTapCallback onTap}) {
+  return ListTile(
+    leading: Icon(icon, color: Colors.orange),
+    title: Text(text, style: TextStyle(fontSize: 16)),
+    onTap: onTap,
+  );
 }
 
 class CategoryItem extends StatelessWidget {
@@ -334,4 +311,5 @@ class DealItem extends StatelessWidget {
       ),
     );
   }
+
 }

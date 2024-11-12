@@ -1,6 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../Address/address.dart';
+import '../orders/ordred.dart';
+import 'home_order_page.dart';
+import 'home_pament_page.dart';
+import 'home_profile_page.dart';
+
 class HomeAccountSreen extends StatefulWidget {
   @override
   _HomeAccountSreenState createState() => _HomeAccountSreenState();
@@ -32,7 +38,9 @@ class _HomeAccountSreenState extends State<HomeAccountSreen> {
               'Profile',
               style: TextStyle(color: Colors.brown, fontWeight: FontWeight.bold),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileSettingsPage() ,));
+            },
           ),
           Divider(),
           ListTile(
@@ -41,7 +49,10 @@ class _HomeAccountSreenState extends State<HomeAccountSreen> {
               'Orders',
               style: TextStyle(color: Colors.brown, fontWeight: FontWeight.bold),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Ordered() ,));
+
+            },
           ),
           Divider(),
           ListTile(
@@ -50,7 +61,10 @@ class _HomeAccountSreenState extends State<HomeAccountSreen> {
               'Address',
               style: TextStyle(color: Colors.brown, fontWeight: FontWeight.bold),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Address() ,));
+
+            },
           ),
           Divider(),
           ListTile(
@@ -59,7 +73,10 @@ class _HomeAccountSreenState extends State<HomeAccountSreen> {
               'Payment',
               style: TextStyle(color: Colors.brown, fontWeight: FontWeight.bold),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentScreen() ,));
+
+            },
           ),
         ],
       ),

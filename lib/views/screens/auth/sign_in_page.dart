@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class HomePageSignInKey extends StatefulWidget {
   @override
@@ -8,6 +9,8 @@ class HomePageSignInKey extends StatefulWidget {
 
 class _HomePageSignInKeyState extends State<HomePageSignInKey> {
   bool _isPasswordVisible = false;
+  final _phoneController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,35 +66,22 @@ class _HomePageSignInKeyState extends State<HomePageSignInKey> {
               SizedBox(height: screenHeight * 0.03),
 
               // Phone Number TextField
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: TextField(
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Phone Number',
-                    contentPadding:
-                    EdgeInsets.symmetric(vertical: screenHeight * 0.02, horizontal: 20),
-                    prefixIcon: Container(
-                      width: screenWidth * 0.2, // Responsive width for the icon
-                      padding: EdgeInsets.only(left: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/images/flag.png", // Provide your flag image path
-                            width: 24,
-                          ),
-                          SizedBox(width: 5),
-                          Icon(Icons.arrow_drop_down),
-                        ],
-                      ),
-                    ),
+              IntlPhoneField(
+                controller: _phoneController,
+                decoration: InputDecoration(
+                  hintText: "Phone Number",
+
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide.none,
                   ),
+                  filled: true,
+                  fillColor: Colors.grey[200],
                 ),
+                initialCountryCode: 'IN', // Default country code (India)
+                onChanged: (phone) {
+                  // Optional: Log the full phone number
+                },
               ),
 
               SizedBox(height: screenHeight * 0.02),
