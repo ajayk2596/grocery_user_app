@@ -73,11 +73,9 @@ class _UserDrawerState extends State<UserDrawer> {
                 );
               }
 
-
               Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
               UserModel user = UserModel.fromJson(data);
-
               return DrawerHeader(
                 decoration: const BoxDecoration(color: Colors.orange),
                 child: SingleChildScrollView(
