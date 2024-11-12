@@ -6,7 +6,7 @@ class SearchingScreen extends StatefulWidget {
    @override
    State<SearchingScreen> createState() => _SearchingScreenState();
  }
- 
+
  class _SearchingScreenState extends State<SearchingScreen> {
    @override
    Widget build(BuildContext context) {
