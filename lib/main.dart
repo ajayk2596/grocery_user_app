@@ -35,8 +35,7 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-        home: OrderAcceptedScreen(),
-      ),);
+
 
 
 
