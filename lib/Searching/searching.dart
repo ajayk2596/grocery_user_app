@@ -12,7 +12,12 @@ class SearchingScreen extends StatefulWidget {
    Widget build(BuildContext context) {
      return Scaffold(
        appBar: AppBar(
-         title:Text('Searching') ,),
+         title:const Text('Searching') ,),
+       body: Column(
+         children: [
+           Text('data'),
+         ],
+       ),
      );
    }
  }
