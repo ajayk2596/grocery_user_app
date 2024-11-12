@@ -13,6 +13,11 @@ class SearchingScreen extends StatefulWidget {
      return Scaffold(
        appBar: AppBar(
          title:const Text('Searching') ,),
+       body: Column(
+         children: [
+           Text('data'),
+         ],
+       ),
      );
    }
  }
