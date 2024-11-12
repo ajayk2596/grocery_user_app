@@ -2,7 +2,13 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
  import 'package:grocery_user_app/views/screens/auth/email_screen.dart';
+
+
+
+import 'package:grocery_user_app/views/screens/auth/email_screen.dart';
+
 import 'package:grocery_user_app/views/screens/home/update_profile_screen.dart';
  import 'package:grocery_user_app/views/screens/auth/email_screen.dart';
 import 'package:grocery_user_app/views/screens/home/update_profile_screen.dart';
@@ -163,10 +169,12 @@ class _UserDrawerState extends State<UserDrawer> {
             text: 'Edit Profile',
             onTap: () {
 
+
               //Navigator.pop(context);
               //Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile(),));
 
               Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileScreen() ,));
+
 
               Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileScreen() ,));
              },
