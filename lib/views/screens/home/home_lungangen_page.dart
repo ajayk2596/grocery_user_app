@@ -108,7 +108,6 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
                     child: Row(
                       children: [
                         InkWell(
-
                           child: CategoryItem(
                             title: 'Fruits',
                             imagePath: 'assets/images/Grapes.png',
