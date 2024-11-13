@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'home_account_page.dart';
+import 'home_categories_screen.dart';
+import 'home_favorit2_page.dart';
+import 'home_lungangen_page.dart';
+
 class HomeCartPage extends StatefulWidget {
   @override
   _HomeCartPageState createState() => _HomeCartPageState();
@@ -186,36 +191,58 @@ class _HomeCartPageState extends State<HomeCartPage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex, // This controls the selected tab index
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _currentIndex,
         selectedItemColor: Colors.orange,
         unselectedItemColor: Colors.grey,
-        showUnselectedLabels: true,
         onTap: (index) {
           setState(() {
-            _currentIndex = index; // Update the current index when tapped
+            _currentIndex = index;
           });
+
+          // Navigate to HomeAccountScreen when the "Account" button is clicked
+          if (index == 4) {  // Index of the "Account" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeAccountScreen()),
+            );
+          }
+
+          // Navigate to HomeFavoriteScreen when the "Favorite" button is clicked
+          if (index == 3) {  // Index of the "Favorite" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeFavoriteScreenTwo()),
+            );
+          }
+
+          if (index == 2) {  // Index of the "Favorite" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeCartPage()),
+            );
+          }
+
+          if (index == 1) {  // Index of the "Favorite" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CategoriesPage()),
+            );
+          }
+
+          if (index == 0) {  // Index of the "Favorite" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeLungungenPage()),
+            );
+          }
         },
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shop),
-            label: 'Shop',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorite',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Shop'),
+          BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorite'),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
         ],
       ),
     );
