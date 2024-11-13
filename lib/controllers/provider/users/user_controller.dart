@@ -245,39 +245,11 @@ class UserController with ChangeNotifier {
     }
   }
 
-  // Upload profile image to Firebase Storage and return the download URL
-  Future<String?> uploadImage(String userId,  user) async {
-    if (profileImage != null) {
-      try {
-        var imageUpload = FirebaseStorage.instance.ref("profile/$userId");
-        await imageUpload.putFile(profileImage!, SettableMetadata(contentType: "image/png"));
-        return await imageUpload.getDownloadURL();
 
 
-      } catch (error) {
-        print("Error uploading image: $error");
-      }
-    } else {
-      Fluttertoast.showToast(msg: "No image selected.");
-    }
-    notifyListeners();
-    return null;
-  }
 
 
-  // Add or update user information in Firestore
-  Future<void> addOrUpdateUserData(String userId, UserModel user) async {
 
-
-    try {
-      await _usersCollection.doc(userId).set(user.toJson(), SetOptions(merge: true));
-      Fluttertoast.showToast(msg: "User profile updated successfully");
-      notifyListeners();
-    } catch (error) {
-      print('Error updating user profile: $error');
-    }
-    notifyListeners();
-  }
 
 
 

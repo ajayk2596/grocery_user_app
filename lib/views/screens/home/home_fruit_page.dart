@@ -1,6 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'home_account_page.dart';
+import 'home_cart_page.dart';
+import 'home_categories_screen.dart';
+import 'home_favorit2_page.dart';
+import 'home_lungangen_page.dart';
+
 class HomePageApple extends StatefulWidget {
   @override
   _HomePageAppleState createState() => _HomePageAppleState();
@@ -157,6 +163,43 @@ class _HomePageAppleState extends State<HomePageApple> {
           setState(() {
             _currentIndex = index;
           });
+
+          // Navigate to HomeAccountScreen when the "Account" button is clicked
+          if (index == 4) {  // Index of the "Account" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeAccountScreen()),
+            );
+          }
+
+          // Navigate to HomeFavoriteScreen when the "Favorite" button is clicked
+          if (index == 3) {  // Index of the "Favorite" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeFavoriteScreenTwo()),
+            );
+          }
+
+          if (index == 2) {  // Index of the "Favorite" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeCartPage()),
+            );
+          }
+
+          if (index == 1) {  // Index of the "Favorite" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeCategoriesScreen()),
+            );
+          }
+
+          if (index == 0) {  // Index of the "Favorite" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeLungungenPage()),
+            );
+          }
         },
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Shop'),

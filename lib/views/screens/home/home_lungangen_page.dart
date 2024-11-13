@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:grocery_user_app/controllers/provider/users/user_controller.dart';
 import 'package:grocery_user_app/views/screens/home/home_drawer.dart';
 import 'package:provider/provider.dart';
-
-
 import 'home_account_page.dart';
+import 'home_cart_page.dart';
+import 'home_categories_screen.dart';
+import 'home_favorit2_page.dart';
 import 'home_fruit_page.dart';
 
 
@@ -13,8 +14,8 @@ class HomeLungungenPage extends StatefulWidget {
   _HomeLungungenPageState createState() => _HomeLungungenPageState();
 }
 
-
 class _HomeLungungenPageState extends State<HomeLungungenPage> {
+
   TextEditingController _searchController = TextEditingController();
   int _currentIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -52,8 +53,6 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
         ],
       ),
         drawer: UserDrawer(),
-
-
       body: LayoutBuilder(
         builder: (context, constraints) {
           double screenWidth = constraints.maxWidth;
@@ -204,6 +203,9 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
           );
         },
       ),
+
+
+
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
@@ -218,7 +220,36 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
           if (index == 4) {  // Index of the "Account" button
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomeAccountSreen()),
+              MaterialPageRoute(builder: (context) => HomeAccountScreen()),
+            );
+          }
+
+          // Navigate to HomeFavoriteScreen when the "Favorite" button is clicked
+          if (index == 3) {  // Index of the "Favorite" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeFavoriteScreenTwo()),
+            );
+          }
+
+          if (index == 2) {  // Index of the "Favorite" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeCartPage()),
+            );
+          }
+
+          if (index == 1) {  // Index of the "Favorite" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeCategoriesScreen()),
+            );
+          }
+
+          if (index == 0) {  // Index of the "Favorite" button
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeLungungenPage()),
             );
           }
         },
@@ -230,6 +261,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
           BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
         ],
       ),
+
     );
   }
 }
