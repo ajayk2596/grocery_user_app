@@ -134,7 +134,7 @@ class _HomeFavoriteScreenTwoState extends State<HomeFavoriteScreenTwo> {
           if (index == 1) {  // Index of the "Favorite" button
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CategoriesPage()),
+              MaterialPageRoute(builder: (context) => HomeCategoriesScreen()),
             );
           }
 

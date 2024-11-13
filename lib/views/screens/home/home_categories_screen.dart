@@ -5,17 +5,18 @@ import 'home_cart_page.dart';
 import 'home_favorit2_page.dart';
 import 'home_lungangen_page.dart';
 
-class CategoriesPage extends StatefulWidget {
+class HomeCategoriesScreen extends StatefulWidget {
   @override
-  _CategoriesPageState createState() => _CategoriesPageState();
+  _HomeCategoriesScreenState createState() => _HomeCategoriesScreenState();
 }
 
-class _CategoriesPageState extends State<CategoriesPage> {
+class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
   TextEditingController _searchController = TextEditingController();
   int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    
     var screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -166,7 +167,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           if (index == 1) {  // Index of the "Favorite" button
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CategoriesPage()),
+              MaterialPageRoute(builder: (context) => HomeCategoriesScreen()),
             );
           }
 
