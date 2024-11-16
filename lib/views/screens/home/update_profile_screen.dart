@@ -13,26 +13,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   bool isLoading = false;
 
-  // Future<void> _updateProfile() async {
-  //   setState(() {
-  //     isLoading = true; // Show CircularProgressIndicator
-  //   });
-  //
-  //   await userController.updateUserProfile(
-  //     uid: userData.uid.toString(),
-  //     name: _nameController.text,
-  //     email: _emailController.text,
-  //     phone: _phoneController.text,
-  //     imageFile: _imageFile,
-  //     context: context,
-  //     password: '',
-  //   );
-  //
-  //   setState(() {
-  //     isLoading = false; // Hide CircularProgressIndicator after operation completes
-  //   });
-  // }
-
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -187,30 +167,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
             )
 
-            // SizedBox(
-            //   width: double.infinity,
-            //   child: ElevatedButton(
-            //     onPressed: () async {
-            //       await userController.updateUserProfile(
-            //         uid: userData.uid.toString(),
-            //         name: _nameController.text,
-            //         email: _emailController.text,
-            //         phone: _phoneController.text,
-            //         imageFile: _imageFile,
-            //         context: context, password: '',
-            //       );
-            //     },
-            //     style: ElevatedButton.styleFrom(
-            //       padding: EdgeInsets.symmetric(vertical: 16),
-            //       backgroundColor: Colors.orange,
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(12.0),
-            //       ),
-            //     ),
-            //     child: Text('Update Profile', style: TextStyle(fontSize: 16, color: Colors.white)),
-            //   ),
-            //
-            // ),
 
           ],
         ),

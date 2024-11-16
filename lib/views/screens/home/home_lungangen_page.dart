@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery_user_app/controllers/provider/users/user_controller.dart';
 import 'package:grocery_user_app/views/screens/home/home_drawer.dart';
 import 'package:provider/provider.dart';
-import 'home_account_page.dart';
-import 'home_cart_page.dart';
-import 'home_categories_screen.dart';
-import 'home_favorit2_page.dart';
+
 import 'home_fruit_page.dart';
 
 
@@ -14,10 +11,10 @@ class HomeLungungenPage extends StatefulWidget {
   _HomeLungungenPageState createState() => _HomeLungungenPageState();
 }
 
-class _HomeLungungenPageState extends State<HomeLungungenPage> {
 
+class _HomeLungungenPageState extends State<HomeLungungenPage> {
   TextEditingController _searchController = TextEditingController();
-  int _currentIndex = 0;
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
@@ -52,7 +49,9 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
           ),
         ],
       ),
-        drawer: UserDrawer(),
+      drawer: UserDrawer(),
+
+
       body: LayoutBuilder(
         builder: (context, constraints) {
           double screenWidth = constraints.maxWidth;
@@ -107,6 +106,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
                     child: Row(
                       children: [
                         InkWell(
+
                           child: CategoryItem(
                             title: 'Fruits',
                             imagePath: 'assets/images/Grapes.png',
@@ -160,6 +160,23 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
                   ),
 
                   SizedBox(height: screenHeight * 0.02),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Categories',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: screenWidth * 0.05,
+                        ),
+                      ),
+                      Text(
+                        'See All',
+                        style: TextStyle(color: Colors.orange, fontSize: screenWidth * 0.04),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
 
                   // Deals List
                   SingleChildScrollView(
@@ -197,69 +214,48 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
                       ],
                     ),
                   ),
+                  SizedBox(height: screenHeight * 0.02),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        DealItem(
+                          title: 'Red Apple',
+                          subtitle: '1kg, price',
+                          price: '\$4.99',
+                          imagePath: 'assets/images/Apple.png',
+                          screenWidth: screenWidth,
+                        ),
+                        DealItem(
+                          title: 'Original Banana',
+                          subtitle: '1kg, price',
+                          price: '\$5.99',
+                          imagePath: 'assets/images/Banana.png',
+                          screenWidth: screenWidth,
+                        ),
+                        DealItem(
+                          title: 'Pineapple',
+                          subtitle: '1kg, price',
+                          price: '\$3.99',
+                          imagePath: 'assets/images/Bowl.png',
+                          screenWidth: screenWidth,
+                        ),
+                        DealItem(
+                          title: 'Mango',
+                          subtitle: '1kg, price',
+                          price: '\$3.99',
+                          imagePath: 'assets/images/Mango.png',
+                          screenWidth: screenWidth,
+                        ),
+                      ],
+                    ),
+                  ),
+
                 ],
               ),
             ),
           );
         },
-      ),
-
-
-
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-
-          // Navigate to HomeAccountScreen when the "Account" button is clicked
-          if (index == 4) {  // Index of the "Account" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeAccountScreen()),
-            );
-          }
-
-          // Navigate to HomeFavoriteScreen when the "Favorite" button is clicked
-          if (index == 3) {  // Index of the "Favorite" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeFavoriteScreenTwo()),
-            );
-          }
-
-          if (index == 2) {  // Index of the "Favorite" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeCartPage()),
-            );
-          }
-
-          if (index == 1) {  // Index of the "Favorite" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeCategoriesScreen()),
-            );
-          }
-
-          if (index == 0) {  // Index of the "Favorite" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeLungungenPage()),
-            );
-          }
-        },
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Shop'),
-          BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorite'),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
-        ],
       ),
 
     );

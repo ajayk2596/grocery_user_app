@@ -36,18 +36,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
           return _buildItemCard(items[index]);
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.grey,
-        currentIndex: 2, // Set "Cart" as the active item
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.shop), label: "Shop"),
-          BottomNavigationBarItem(icon: Icon(Icons.explore), label: "Explore"),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: "Cart"),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favorite"),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: "Account"),
-        ],
-      ),
+
     );
   }
 
