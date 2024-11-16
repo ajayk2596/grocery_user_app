@@ -11,7 +11,6 @@ class HomeLungungenPage extends StatefulWidget {
   _HomeLungungenPageState createState() => _HomeLungungenPageState();
 }
 
-
 class _HomeLungungenPageState extends State<HomeLungungenPage> {
   TextEditingController _searchController = TextEditingController();
 
@@ -21,11 +20,9 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
     super.initState();
 
   }
-
   void _openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
   }
-
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<UserController>(context);
@@ -50,13 +47,10 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
         ],
       ),
       drawer: UserDrawer(),
-
-
       body: LayoutBuilder(
         builder: (context, constraints) {
           double screenWidth = constraints.maxWidth;
           double screenHeight = constraints.maxHeight;
-
           return SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
@@ -160,23 +154,8 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
                   ),
 
                   SizedBox(height: screenHeight * 0.02),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Categories',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: screenWidth * 0.05,
-                        ),
-                      ),
-                      Text(
-                        'See All',
-                        style: TextStyle(color: Colors.orange, fontSize: screenWidth * 0.04),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: screenHeight * 0.02),
+
+
 
                   // Deals List
                   SingleChildScrollView(
