@@ -7,7 +7,7 @@ class HomeOrderPage extends StatefulWidget {
 
 class _HomeOrderPageState extends State<HomeOrderPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  int _currentIndex = 0;
+
 
   @override
   void initState() {
@@ -57,38 +57,7 @@ class _HomeOrderPageState extends State<HomeOrderPage> with SingleTickerProvider
           _buildHistoryTab(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shop),
-            label: 'Shop',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorite',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
-        ],
-      ),
+
     );
   }
 

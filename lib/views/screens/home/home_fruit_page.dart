@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'home_account_page.dart';
 import 'home_cart_page.dart';
 import 'home_categories_screen.dart';
@@ -13,94 +11,46 @@ class HomePageApple extends StatefulWidget {
 }
 
 class _HomePageAppleState extends State<HomePageApple> {
-  int _currentIndex = 0;
-  // Selected category
+
   int selectedIndex = 0;
   List<String> categories = ['Fruits', 'Vegetables', 'Meat', 'Fish', 'Snacks'];
-
-  // List to hold cart items (can be changed according to logic)
   List<String> cartItems = [];
 
-  // List of products (name, image, old price, new price, discount)
   List<Map<String, dynamic>> products = [
-    {
-      'name': 'Red Apple',
-      'image': 'assets/images/Apple.png',
-      'oldPrice': 5.99,
-      'newPrice': 4.99,
-      'discount': 10
-    },
-    {
-      'name': 'Banana',
-      'image': 'assets/images/Banana.png',
-      'oldPrice': 2.99,
-      'newPrice': 2.49,
-      'discount': 16
-    },
-    {
-      'name': 'Grapes',
-      'image': 'assets/images/Grapes.png',
-      'oldPrice': 3.99,
-      'newPrice': 3.49,
-      'discount': 12
-    },
-    {
-      'name': 'Mango',
-      'image': 'assets/images/Mango.png',
-      'oldPrice': 6.99,
-      'newPrice': 5.99,
-      'discount': 14
-    },
-    {
-      'name': 'Sea- Bowl',
-      'image': 'assets/images/Bowl.png',
-      'oldPrice': 4.99,
-      'newPrice': 3.99,
-      'discount': 20
-    },
-    {
-      'name': 'Lichi',
-      'image': 'assets/images/Chilli.png',
-      'oldPrice': 5.49,
-      'newPrice': 4.49,
-      'discount': 18
-    },
+    {'name': 'Red Apple', 'image': 'assets/images/Apple.png', 'oldPrice': 5.99, 'newPrice': 4.99, 'discount': 10},
+    {'name': 'Banana', 'image': 'assets/images/Banana.png', 'oldPrice': 2.99, 'newPrice': 2.49, 'discount': 16},
+    {'name': 'Grapes', 'image': 'assets/images/Grapes.png', 'oldPrice': 3.99, 'newPrice': 3.49, 'discount': 12},
+    {'name': 'Mango', 'image': 'assets/images/Mango.png', 'oldPrice': 6.99, 'newPrice': 5.99, 'discount': 14},
+    {'name': 'Sea- Bowl', 'image': 'assets/images/Bowl.png', 'oldPrice': 4.99, 'newPrice': 3.99, 'discount': 20},
+    {'name': 'Lichi', 'image': 'assets/images/Chilli.png', 'oldPrice': 5.49, 'newPrice': 4.49, 'discount': 18},
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fruits'),
+        title: Text('Fruits', style: TextStyle(fontSize: 18, color: Colors.orange)),
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: TextStyle(
-          color: Colors.orange,
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-        ),
         leading: Icon(Icons.arrow_back, color: Colors.orange),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: "Search",
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
+            TextField(
+              decoration: InputDecoration(
+                hintText: "Search",
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 8),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: categories
                   .asMap()
                   .entries
@@ -113,27 +63,24 @@ class _HomePageAppleState extends State<HomePageApple> {
                 child: Text(
                   entry.value,
                   style: TextStyle(
-                    color: selectedIndex == entry.key
-                        ? Colors.orange
-                        : Colors.grey,
-                    fontWeight: selectedIndex == entry.key
-                        ? FontWeight.bold
-                        : FontWeight.normal,
+                    fontSize: 12,
+                    color: selectedIndex == entry.key ? Colors.orange : Colors.grey,
+                    fontWeight: selectedIndex == entry.key ? FontWeight.bold : FontWeight.normal,
                   ),
                 ),
               ))
                   .toList(),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 8),
             Expanded(
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 3 / 4,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8,
                 ),
-                itemCount: products.length, // Number of items
+                itemCount: products.length,
                 itemBuilder: (context, index) {
                   var product = products[index];
                   return ProductCard(
@@ -153,61 +100,6 @@ class _HomePageAppleState extends State<HomePageApple> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-
-          // Navigate to HomeAccountScreen when the "Account" button is clicked
-          if (index == 4) {  // Index of the "Account" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeAccountScreen()),
-            );
-          }
-
-          // Navigate to HomeFavoriteScreen when the "Favorite" button is clicked
-          if (index == 3) {  // Index of the "Favorite" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeFavoriteScreenTwo()),
-            );
-          }
-
-          if (index == 2) {  // Index of the "Favorite" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeCartPage()),
-            );
-          }
-
-          if (index == 1) {  // Index of the "Favorite" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeCategoriesScreen()),
-            );
-          }
-
-          if (index == 0) {  // Index of the "Favorite" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeLungungenPage()),
-            );
-          }
-        },
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Shop'),
-          BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorite'),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
-        ],
       ),
     );
   }
@@ -234,13 +126,13 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(10),
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade300,
-            blurRadius: 5,
-            spreadRadius: 2,
+            color: Colors.grey.shade200,
+            blurRadius: 4,
+            spreadRadius: 1,
           ),
         ],
       ),
@@ -248,23 +140,21 @@ class ProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Center(  // Center widget to center the image
-              child: ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-                child: Image.asset(
-                  imagePath,
-                  fit: BoxFit.contain,  // Image will be contained and centered
-                ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.contain,
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(6.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
-                Text("1kg", style: TextStyle(color: Colors.grey)),
+                Text(name, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                Text("1kg", style: TextStyle(fontSize: 10, color: Colors.grey)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -273,16 +163,11 @@ class ProductCard extends StatelessWidget {
                       children: [
                         Text(
                           "\$$newPrice",
-                          style: TextStyle(
-                              color: Colors.orange,
-                              fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 12, color: Colors.orange, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           "\$$oldPrice",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            decoration: TextDecoration.lineThrough,
-                          ),
+                          style: TextStyle(fontSize: 10, color: Colors.grey, decoration: TextDecoration.lineThrough),
                         ),
                       ],
                     ),
@@ -294,12 +179,12 @@ class ProductCard extends StatelessWidget {
                       ),
                       child: Text(
                         "-$discount%",
-                        style: TextStyle(color: Colors.green),
+                        style: TextStyle(fontSize: 10, color: Colors.green),
                       ),
                     ),
                     IconButton(
                       onPressed: onAddToCart,
-                      icon: Icon(Icons.add_circle, color: Colors.green),
+                      icon: Icon(Icons.add_circle, color: Colors.green, size: 18),
                     ),
                   ],
                 ),

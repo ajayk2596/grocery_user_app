@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:grocery_user_app/views/screens/auth/email_screen.dart';
-import 'package:grocery_user_app/views/screens/home/home_lungangen_page.dart';
+import 'package:grocery_user_app/views/screens/home/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _navigateBasedOnAuth() {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>HomeLungungenPage() ,));
+   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>HomeScreen() ,));
     } else {
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EmailLoginScreen(),));
     }

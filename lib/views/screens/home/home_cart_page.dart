@@ -11,7 +11,7 @@ class HomeCartPage extends StatefulWidget {
 }
 
 class _HomeCartPageState extends State<HomeCartPage> {
-  int _currentIndex = 0;
+
 
   // Cart items with quantities and prices
   List<Map<String, dynamic>> cartItems = [
@@ -190,61 +190,7 @@ class _HomeCartPageState extends State<HomeCartPage> {
           SizedBox(height: screenHeight * 0.02), // Add spacing above the bottom navigation bar
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
 
-          // Navigate to HomeAccountScreen when the "Account" button is clicked
-          if (index == 4) {  // Index of the "Account" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeAccountScreen()),
-            );
-          }
-
-          // Navigate to HomeFavoriteScreen when the "Favorite" button is clicked
-          if (index == 3) {  // Index of the "Favorite" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeFavoriteScreenTwo()),
-            );
-          }
-
-          if (index == 2) {  // Index of the "Favorite" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeCartPage()),
-            );
-          }
-
-          if (index == 1) {  // Index of the "Favorite" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeCategoriesScreen()),
-            );
-          }
-
-          if (index == 0) {  // Index of the "Favorite" button
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeLungungenPage()),
-            );
-          }
-        },
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Shop'),
-          BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorite'),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
-        ],
-      ),
     );
   }
 }
