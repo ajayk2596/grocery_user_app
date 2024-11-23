@@ -9,7 +9,9 @@ import 'package:grocery_user_app/views/screens/home/home_item_page.dart';
 import 'package:grocery_user_app/views/screens/home/home_lungangen_page.dart';
 import 'package:grocery_user_app/views/screens/home/order_accepeted_screen.dart';
 import 'package:provider/provider.dart';
+import 'ButtomNavigationScreen/buttom_navigation_screen.dart';
 import 'RegisterScreen/register_screen.dart';
+import 'add_data.dart';
 import 'controllers/provider/users/user_controller.dart';
 import 'firebase_options.dart';
 
@@ -26,18 +28,12 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-
     return ChangeNotifierProvider(create: (Contxte)=> UserController(),
       child:  MaterialApp(
         debugShowCheckedModeBanner: false,
-
         home: SplashScreen(),
       ),
     );
-
-
-
-
 
   }
 }

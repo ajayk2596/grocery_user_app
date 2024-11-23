@@ -165,7 +165,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     labelText: 'Product Price',
                     border: OutlineInputBorder()
                 ),
-
               ),
             ),
               SizedBox(height: screenHeight*0.3,),

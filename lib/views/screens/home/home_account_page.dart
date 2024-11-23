@@ -85,7 +85,7 @@ class _HomeAccountSreenState extends State<HomeAccountSreen> {
         selectedItemColor: Colors.orange,
         unselectedItemColor: Colors.grey,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Shop'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: ' Shop'),
           BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
           BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorite'),
