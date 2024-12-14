@@ -13,7 +13,6 @@ class ProductProvider with ChangeNotifier {
 
   List<Product> get products => _products;
   bool get isLoading => _isLoading;
-  //final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> fetchProducts() async {
     final url = Uri.parse('https://dummyjson.com/products');
@@ -48,7 +47,7 @@ get count => _count;
   }
 
 
-  void decrimentAddToCart(){
+  void decrementAddToCart(){
     -_count--;
     notifyListeners();
   }
@@ -63,7 +62,7 @@ get count => _count;
       'description': product.description,
       'thumbnail': product.thumbnail,
       'discountPercentage': product.discountPercentage,
-      'quantity': 1, // Default quantity
+      'quantity': 1,
     }).then((_) {
       print("${product.title} added to Firebase!");
     }).catchError((error) {

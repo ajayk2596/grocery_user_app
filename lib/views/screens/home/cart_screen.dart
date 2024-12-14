@@ -5,19 +5,18 @@ import 'package:provider/provider.dart';
 import '../../../controllers/provider/users/product_provider.dart';
 
 class CartScreen extends StatelessWidget {
-
   const CartScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final productProvider = Provider.of<ProductProvider>(context, listen: false);
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Cart'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-
         stream: FirebaseFirestore.instance.collection('addtocart').snapshots(),
         builder: (context, snapshot) {
           // Check for errors or loading
@@ -55,19 +54,19 @@ class CartScreen extends StatelessWidget {
                       child: ListTile(
                         leading: item['thumbnail'] != null
                             ? Image.network(
-                          item['thumbnail'],
-                          width: 50,
-                          height: 50,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.image, size: 50),
-                        )
+                                item['thumbnail'],
+                                width: 50,
+                                height: 50,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    const Icon(Icons.image, size: 50),
+                              )
                             : const Icon(Icons.image, size: 50),
                         title: Text(item['title'] ?? 'No Title'),
                         subtitle: Text(
                           'Price: \$${item['price'] ?? 0.0}\n'
-                              'Quantity: $quantity\n'
-                              'Total: \$${(item['price'] ?? 0) * quantity}',
+                          'Quantity: $quantity\n'
+                          'Total: \$${(item['price'] ?? 0) * quantity}',
                         ),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -95,8 +94,7 @@ class CartScreen extends StatelessWidget {
                             IconButton(
                               icon: const Icon(Icons.delete, color: Colors.red),
                               onPressed: () {
-
-                                productProvider.decrimentAddToCart();
+                                productProvider.decrementAddToCart();
                                 FirebaseFirestore.instance
                                     .collection('addtocart')
                                     .doc(item.id)

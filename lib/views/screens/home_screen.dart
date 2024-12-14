@@ -175,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ElevatedButton(onPressed: () {
                setState(() {});
                  _uploadFile();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ViewProduct(),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CategoriesPage(),));
                }, child: Text('Add Data')),
             )
           ],
