@@ -33,7 +33,10 @@ class _HomePageAppleState extends State<HomePageApple> {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        leading: Icon(Icons.arrow_back, color: Colors.orange),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.orange),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),

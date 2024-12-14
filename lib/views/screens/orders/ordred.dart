@@ -24,7 +24,7 @@ class _OrderedState extends State<Ordered> {
           actions: [
             IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => NewAddress()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => UserDetailsForm()));
               },
               icon: Icon(Icons.add, color: Colors.orange),
             ),

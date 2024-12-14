@@ -1,24 +1,43 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_user_app/controllers/provider/users/user_provider.dart';
 import 'package:grocery_user_app/models/users/user_details_model.dart';
 import 'package:provider/provider.dart';
 
-class UserDetailsForm extends StatefulWidget {
+class UpdateUserDetailsForm extends StatefulWidget {
+  UserDetailsModel userDetailsModel;
+
+  UpdateUserDetailsForm({super.key, required this.userDetailsModel});
+
   @override
-  _UserDetailsFormState createState() => _UserDetailsFormState();
+  _UpdateUserDetailsFormState createState() => _UpdateUserDetailsFormState();
 }
 
-class _UserDetailsFormState extends State<UserDetailsForm> {
+class _UpdateUserDetailsFormState extends State<UpdateUserDetailsForm> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController unameController = TextEditingController();
-  final TextEditingController uaddressController = TextEditingController();
-  final TextEditingController unearcityController = TextEditingController();
-  final TextEditingController pincodeController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController uUpNameController = TextEditingController();
+  final TextEditingController uUpAddressController = TextEditingController();
+  final TextEditingController uUpNearCityController = TextEditingController();
+  final TextEditingController upPincodeController = TextEditingController();
+  final TextEditingController upPhoneController = TextEditingController();
 
   String? selectedState;
   String? selectedCountry;
+
+  @override
+  void initState() {
+    uUpNameController.text = widget.userDetailsModel.name ?? "";
+    uUpAddressController.text = widget.userDetailsModel.address ?? "";
+    uUpNearCityController.text = widget.userDetailsModel.nearbyCity ?? "";
+    upPincodeController.text =
+        widget.userDetailsModel.pincode?.toString() ?? "";
+    upPhoneController.text =
+        widget.userDetailsModel.phoneNumber?.toString() ?? "";
+    selectedState = widget.userDetailsModel.state;
+    selectedCountry = widget.userDetailsModel.country;
+    super.initState();
+  }
 
   final List<String> states = [
     'Andhra Pradesh',
@@ -51,7 +70,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
     'West Bengal',
   ];
 
-  final List<String> countries =  [
+  final List<String> countries = [
     "Afghanistan",
     "Albania",
     "Algeria",
@@ -254,7 +273,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("User Details"),
+        title: const Text(" Edit User Details"),
         centerTitle: true,
         backgroundColor: Colors.orange,
       ),
@@ -266,11 +285,11 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildTextField("Name", unameController, TextInputType.text),
+                _buildTextField("Name", uUpNameController, TextInputType.text),
                 _buildTextField(
-                    "Address", uaddressController, TextInputType.text),
+                    "Address", uUpAddressController, TextInputType.text),
                 _buildTextField(
-                    "Nearby City", unearcityController, TextInputType.text),
+                    "Nearby City", uUpNearCityController, TextInputType.text),
                 _buildDropdownTextField(
                   label: "State",
                   selectedValue: selectedState,
@@ -292,61 +311,88 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                   },
                 ),
                 _buildTextField(
-                    "Pincode", pincodeController, TextInputType.number),
+                    "Pincode", upPincodeController, TextInputType.number),
                 _buildTextField(
-                    "Phone Number", phoneController, TextInputType.phone),
+                    "Phone Number", upPhoneController, TextInputType.phone),
                 const SizedBox(height: 20),
                 Center(
                   child: SizedBox(
-                    width: double.infinity, // Full-width button
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          var userDetails = UserDetailsModel(
-                            name: unameController.text,
-                            address: uaddressController.text,
-                            nearbyCity: unearcityController.text,
-                            state: selectedState,
-                            country: selectedCountry,
-                            pincode: int.tryParse(pincodeController.text),
-                            phoneNumber: int.tryParse(phoneController.text),
-                          );
+                      width: double.infinity, // Full-width button
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          // Ensure userId is valid
+                          final userId =
+                              FirebaseAuth.instance.currentUser?.uid ?? "";
 
-                          userData.addUserDetails(userDetails);
+                          if (userId != null && userId.isNotEmpty) {
+                            try {
+                              // Create an updated user details object
+                              var updatedUserDetails = UserDetailsModel(
+                                name: uUpNameController.text.isNotEmpty
+                                    ? uUpNameController.text
+                                    : widget.userDetailsModel.name,
+                                address: uUpAddressController.text.isNotEmpty
+                                    ? uUpAddressController.text
+                                    : widget.userDetailsModel.address,
+                                nearbyCity:
+                                    uUpNearCityController.text.isNotEmpty
+                                        ? uUpNearCityController.text
+                                        : widget.userDetailsModel.nearbyCity,
+                                state: selectedState ??
+                                    widget.userDetailsModel.state,
+                                country: selectedCountry ??
+                                    widget.userDetailsModel.country,
+                                pincode:
+                                    int.tryParse(upPincodeController.text) ??
+                                        widget.userDetailsModel.pincode,
+                                phoneNumber:
+                                    int.tryParse(upPhoneController.text) ??
+                                        widget.userDetailsModel.phoneNumber,
+                              );
 
-                          // Saare textfields clear karne ke liye
-                          unameController.clear();
-                          uaddressController.clear();
-                          unearcityController.clear();
-                          pincodeController.clear();
-                          phoneController.clear();
+                              // Update user details in Provider
+                              await Provider.of<UserProvider>(context,
+                                      listen: false)
+                                  .updateUserDetails(
+                                      userId, updatedUserDetails);
 
-                          // Dropdowns reset karne ke liye
-                          setState(() {
-                            selectedState = null;
-                            selectedCountry = null;
-                          });
+                              // Success message
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text("Details updated successfully!")),
+                              );
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Details submitted successfully!"),
-                            ),
-                          );
-                        }
-                      },
+                              // Clear the form and reset dropdowns
+                              _clearFormFields();
 
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 15,
+                              // Navigate back to the previous screen
+                              Navigator.pop(context);
+                            } catch (e) {
+                              // Handle error during update
+                              print("Error updating data: $e");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Failed to update: $e")),
+                              );
+                            }
+                          } else {
+                            // Error message if userId is invalid
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content:
+                                      Text("Error: User ID is null or empty!")),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 15),
+                          textStyle: const TextStyle(fontSize: 16),
                         ),
-                        textStyle: const TextStyle(fontSize: 16),
-                      ),
-                      child: const Text("Submit"),
-                    ),
-                  ),
-                ),
+                        child: const Text("Update Data"),
+                      )),
+                )
               ],
             ),
           ),
@@ -355,8 +401,21 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller,
-      TextInputType inputType) {
+  void _clearFormFields() {
+    uUpNameController.clear();
+    uUpAddressController.clear();
+    uUpNearCityController.clear();
+    upPincodeController.clear();
+    upPhoneController.clear();
+
+    setState(() {
+      selectedState = null;
+      selectedCountry = null;
+    });
+  }
+
+  Widget _buildTextField(
+      String label, TextEditingController controller, TextInputType inputType) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
@@ -369,27 +428,9 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
             borderRadius: BorderRadius.circular(8.0),
           ),
         ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return "$label is required";
-          }
-
-          // Phone Number ke liye specific validation
-          if (label == "Phone Number") {
-            if (value.length != 10) {
-              return "Phone number must be exactly 10 digits";
-            }
-            if (!RegExp(r'^\d{10}$').hasMatch(value)) {
-              return "Only numeric digits are allowed";
-            }
-          }
-
-          return null;
-        },
       ),
     );
   }
-
 
   Widget _buildDropdownTextField({
     required String label,

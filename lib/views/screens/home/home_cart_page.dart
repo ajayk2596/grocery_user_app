@@ -15,6 +15,7 @@ class _HomeCartPageState extends State<HomeCartPage> {
 
   // Cart items with quantities and prices
   List<Map<String, dynamic>> cartItems = [
+
     {'name': 'Red Apple', 'image': 'assets/images/Apple.png', 'price': 4.99, 'quantity': 2, 'unit': 'kg'},
     {'name': 'Original Banana', 'image': 'assets/images/Banana.png', 'price': 5.99, 'quantity': 2, 'unit': 'kg'},
     {'name': 'Avocado Bowl', 'image': 'assets/images/Bowl.png', 'price': 24.00, 'quantity': 1, 'unit': 'st'},
