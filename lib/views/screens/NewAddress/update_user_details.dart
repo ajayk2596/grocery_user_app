@@ -3,19 +3,19 @@ import 'package:grocery_user_app/controllers/provider/users/user_provider.dart';
 import 'package:grocery_user_app/models/users/user_details_model.dart';
 import 'package:provider/provider.dart';
 
-class UserDetailsForm extends StatefulWidget {
+class UpdateUserDetailsForm extends StatefulWidget {
   @override
-  _UserDetailsFormState createState() => _UserDetailsFormState();
+  _UpdateUserDetailsFormState createState() => _UpdateUserDetailsFormState();
 }
 
-class _UserDetailsFormState extends State<UserDetailsForm> {
+class _UpdateUserDetailsFormState extends State<UpdateUserDetailsForm> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController unameController = TextEditingController();
-  final TextEditingController uaddressController = TextEditingController();
-  final TextEditingController unearcityController = TextEditingController();
-  final TextEditingController pincodeController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController upnameController = TextEditingController();
+  final TextEditingController upaddressController = TextEditingController();
+  final TextEditingController upnearcityController = TextEditingController();
+  final TextEditingController uppincodeController = TextEditingController();
+  final TextEditingController upphoneController = TextEditingController();
 
   String? selectedState;
   String? selectedCountry;
@@ -51,7 +51,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
     'West Bengal',
   ];
 
-  final List<String> countries =  [
+  final List<String> countries = [
     "Afghanistan",
     "Albania",
     "Algeria",
@@ -250,13 +250,16 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
 
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserProvider>(context);
 
+    final userData = Provider.of<UserProvider>(context);
+    var index=0;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(onPressed: () {
+
+        }, icon: Icon(Icons.location_on_rounded,color:  Colors.orange,)),
         title: const Text("User Details"),
         centerTitle: true,
-        backgroundColor: Colors.orange,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -266,11 +269,11 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildTextField("Name", unameController, TextInputType.text),
+                _buildTextField("Name", upnameController, TextInputType.text),
                 _buildTextField(
-                    "Address", uaddressController, TextInputType.text),
-                _buildTextField(
-                    "Nearby City", unearcityController, TextInputType.text),
+                    "Address", upaddressController, TextInputType.text),
+                _buildTextField("Nearby City", upnearcityController,
+                    TextInputType.text),
                 _buildDropdownTextField(
                   label: "State",
                   selectedValue: selectedState,
@@ -292,59 +295,34 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                   },
                 ),
                 _buildTextField(
-                    "Pincode", pincodeController, TextInputType.number),
-                _buildTextField(
-                    "Phone Number", phoneController, TextInputType.phone),
+                    "Pincode", uppincodeController, TextInputType.number),
+                _buildTextField("Phone Number", upphoneController,
+                    TextInputType.phone),
                 const SizedBox(height: 20),
                 Center(
-                  child: SizedBox(
-                    width: double.infinity, // Full-width button
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          var userDetails = UserDetailsModel(
-                            name: unameController.text,
-                            address: uaddressController.text,
-                            nearbyCity: unearcityController.text,
-                            state: selectedState,
-                            country: selectedCountry,
-                            pincode: int.tryParse(pincodeController.text),
-                            phoneNumber: int.tryParse(phoneController.text),
-                          );
+                  child: ElevatedButton(
+                    onPressed: () {
 
-                          userData.addUserDetails(userDetails);
+                      var upd=UserDetailsModel(
+                        name: upnameController.text,
+                        address: upaddressController.text,
+                        nearbyCity: upnearcityController.text,
+                        state: selectedState,
+                        country: selectedCountry,
+                        pincode: int.tryParse(uppincodeController.text),
+                        phoneNumber: int.tryParse(upphoneController.text),
+                      );
 
-                          // Saare textfields clear karne ke liye
-                          unameController.clear();
-                          uaddressController.clear();
-                          unearcityController.clear();
-                          pincodeController.clear();
-                          phoneController.clear();
-
-                          // Dropdowns reset karne ke liye
-                          setState(() {
-                            selectedState = null;
-                            selectedCountry = null;
-                          });
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Details submitted successfully!"),
-                            ),
-                          );
-                        }
-                      },
-
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 15,
-                        ),
-                        textStyle: const TextStyle(fontSize: 16),
-                      ),
-                      child: const Text("Submit"),
-                    ),
+                      userData.addUserDetails(upd);
+                      if (_formKey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Details submitted successfully!"),
+                          ),
+                        );
+                      }
+                    },
+                    child: const Text("Submit"),
                   ),
                 ),
               ],
@@ -355,6 +333,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
     );
   }
 
+  // Helper method to create text fields
   Widget _buildTextField(String label, TextEditingController controller,
       TextInputType inputType) {
     return Padding(
@@ -364,7 +343,6 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
         keyboardType: inputType,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(color: Colors.orange),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
@@ -373,24 +351,13 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
           if (value == null || value.isEmpty) {
             return "$label is required";
           }
-
-          // Phone Number ke liye specific validation
-          if (label == "Phone Number") {
-            if (value.length != 10) {
-              return "Phone number must be exactly 10 digits";
-            }
-            if (!RegExp(r'^\d{10}$').hasMatch(value)) {
-              return "Only numeric digits are allowed";
-            }
-          }
-
           return null;
         },
       ),
     );
   }
 
-
+  // Helper method for dropdown fields
   Widget _buildDropdownTextField({
     required String label,
     required List<String> items,
@@ -403,27 +370,29 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
         onTap: () {
           _showDropdownDialog(label, items, onSelected);
         },
-        child: InputDecorator(
+        child: TextFormField(
+          enabled: false, // Disable manual typing
           decoration: InputDecoration(
             labelText: label,
-            labelStyle: TextStyle(color: Colors.orange),
-            suffixIcon: const Icon(Icons.arrow_drop_down, color: Colors.orange),
+            suffixIcon: const Icon(Icons.arrow_drop_down,color: Colors.orange,),
             border: OutlineInputBorder(
+              borderSide: BorderSide(width: 2),
               borderRadius: BorderRadius.circular(8.0),
             ),
           ),
-          child: Text(
-            selectedValue ?? "Select $label",
-            style: TextStyle(
-              fontSize: 16,
-              color: selectedValue != null ? Colors.black : Colors.grey,
-            ),
-          ),
+          controller: TextEditingController(text: selectedValue),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "$label is required";
+            }
+            return null;
+          },
         ),
       ),
     );
   }
 
+  // Helper method to show dropdown dialog
   void _showDropdownDialog(
       String label, List<String> items, Function(String?) onSelected) {
     showDialog(
@@ -432,10 +401,11 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
         title: Text("Select $label"),
         content: SizedBox(
           width: double.maxFinite,
-          child: ListView.separated(
+          child: ListView.builder(
             shrinkWrap: true,
             itemCount: items.length,
             itemBuilder: (context, index) {
+
               return ListTile(
                 title: Text(items[index]),
                 onTap: () {
@@ -444,7 +414,6 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                 },
               );
             },
-            separatorBuilder: (context, index) => const Divider(),
           ),
         ),
       ),

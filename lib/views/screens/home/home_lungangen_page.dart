@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_user_app/controllers/provider/users/user_controller.dart';
 import 'package:grocery_user_app/views/screens/home/home_drawer.dart';
+import 'package:grocery_user_app/views/screens/home/product_details_screen.dart';
 import 'package:provider/provider.dart';
-
+import '../../../controllers/provider/users/product_provider.dart';
 import 'home_fruit_page.dart';
 
 
@@ -18,13 +19,18 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
   @override
   void initState() {
     super.initState();
-
+    Future.microtask(() {
+      Provider.of<ProductProvider>(context, listen: false).fetchProducts();
+    });
   }
   void _openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
   }
   @override
   Widget build(BuildContext context) {
+
+    final productProvider = Provider.of<ProductProvider>(context);
+
     final data = Provider.of<UserController>(context);
     return Scaffold(
       key: _scaffoldKey,
@@ -93,7 +99,6 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
                     ],
                   ),
                   SizedBox(height: screenHeight * 0.02),
-
                   // Categories Row
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -154,81 +159,96 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
                   ),
 
                   SizedBox(height: screenHeight * 0.02),
-
-
-
-                  // Deals List
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        DealItem(
-                          title: 'Red Apple',
-                          subtitle: '1kg, price',
-                          price: '\$4.99',
-                          imagePath: 'assets/images/Apple.png',
-                          screenWidth: screenWidth,
-                        ),
-                        DealItem(
-                          title: 'Original Banana',
-                          subtitle: '1kg, price',
-                          price: '\$5.99',
-                          imagePath: 'assets/images/Banana.png',
-                          screenWidth: screenWidth,
-                        ),
-                        DealItem(
-                          title: 'Pineapple',
-                          subtitle: '1kg, price',
-                          price: '\$3.99',
-                          imagePath: 'assets/images/Bowl.png',
-                          screenWidth: screenWidth,
-                        ),
-                        DealItem(
-                          title: 'Mango',
-                          subtitle: '1kg, price',
-                          price: '\$3.99',
-                          imagePath: 'assets/images/Mango.png',
-                          screenWidth: screenWidth,
-                        ),
-                      ],
+                  productProvider.isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : productProvider.products.isEmpty
+                      ? const Center(child: Text('No products available'))
+                      : GridView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.7,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
                     ),
+                    itemCount: productProvider.products.length,
+                    itemBuilder: (context, index) {
+                      final product = productProvider.products[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductDetailScreen(productid: product),
+                            ),
+                          );
+                        },
+                        child: Card(
+                          elevation: 3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.vertical(
+                                    top: Radius.circular(8.0),
+                                  ),
+                                  child: Image.network(
+                                    product.thumbnail ?? '',
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    errorBuilder: (context, error, stackTrace) =>
+                                    const Icon(Icons.image, size: 50),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      product.title ?? 'No Title',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          '\$${product.price?.toStringAsFixed(2) ?? 'N/A'}',
+                                          style: const TextStyle(
+                                            decoration: TextDecoration.lineThrough,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          '\$${((product.price ?? 0) * ((100 - (product.discountPercentage ?? 0)) / 100)).toStringAsFixed(2)}',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  SizedBox(height: screenHeight * 0.02),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        DealItem(
-                          title: 'Red Apple',
-                          subtitle: '1kg, price',
-                          price: '\$4.99',
-                          imagePath: 'assets/images/Apple.png',
-                          screenWidth: screenWidth,
-                        ),
-                        DealItem(
-                          title: 'Original Banana',
-                          subtitle: '1kg, price',
-                          price: '\$5.99',
-                          imagePath: 'assets/images/Banana.png',
-                          screenWidth: screenWidth,
-                        ),
-                        DealItem(
-                          title: 'Pineapple',
-                          subtitle: '1kg, price',
-                          price: '\$3.99',
-                          imagePath: 'assets/images/Bowl.png',
-                          screenWidth: screenWidth,
-                        ),
-                        DealItem(
-                          title: 'Mango',
-                          subtitle: '1kg, price',
-                          price: '\$3.99',
-                          imagePath: 'assets/images/Mango.png',
-                          screenWidth: screenWidth,
-                        ),
-                      ],
-                    ),
-                  ),
+
+
+
 
                 ],
               ),
