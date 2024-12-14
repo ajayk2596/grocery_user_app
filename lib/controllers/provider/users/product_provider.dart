@@ -39,6 +39,26 @@ class ProductProvider with ChangeNotifier {
     }
   }
 
+  // List<String> _cartItems = [];
+  // int _itemCount = 0;
+  //
+  // List<String> get cartItems => _cartItems;
+  // int get itemCount => _itemCount;
+  //
+  // void addToCart(String item) {
+  //   _cartItems.add(item);
+  //   _itemCount = _cartItems.length;
+  //   notifyListeners();
+  // }
+  //
+  // void removeFromCart(String item) {
+  //   _cartItems.remove(item); // Item remove karna
+  //   _itemCount = _cartItems.length;
+  //   notifyListeners();
+  // }
+
+  final countAddToCart = [];
+
 
 get count => _count;
   void incrementAddToCart(){

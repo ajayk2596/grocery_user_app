@@ -34,7 +34,6 @@ class CartScreen extends StatelessWidget {
             return const Center(child: Text('No items in cart.'));
           }
 
-          // Calculate total cart value
           double totalPrice = 0;
           for (var item in cartItems) {
             totalPrice += (item['price'] ?? 0) * (item['quantity'] ?? 1);

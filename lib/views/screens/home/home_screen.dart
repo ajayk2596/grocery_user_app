@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text(
                         '${provider.count}',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.yellow,
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
                         ),
