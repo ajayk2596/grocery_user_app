@@ -7,9 +7,7 @@ import '../../../models/users/user_details_model.dart';
 class UserProvider with ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Add User Details for Current User
   Future<void> addUserDetails(UserDetailsModel userDetails) async {
-    // Get current user's UID
     var currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
       print("Error: No user is logged in!");
@@ -18,14 +16,11 @@ class UserProvider with ChangeNotifier {
     String userId = currentUser.uid;
 
     try {
-
-      // Add userId to userDetails before saving to Firestore
       userDetails.userId = userId;
 
-      // Save user details to Firestore
       await _firestore
           .collection('userdetails')
-          .doc(userId) // Save data under user's UID
+          .doc(userId)
           .set(userDetails.toJson());
 
       print("User details added successfully for userId: $userId");
@@ -34,11 +29,11 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  // Update User Details
-  Future<void> updateUserDetails(String userId, UserDetailsModel updatedDetails) async {
+  Future<void> updateUserDetails(
+      String userId, UserDetailsModel updatedDetails) async {
     try {
       await FirebaseFirestore.instance
-          .collection('userdetails') // Ensure this collection name is correct
+          .collection('userdetails')
           .doc(userId)
           .update(updatedDetails.toJson());
     } catch (e) {
@@ -46,11 +41,12 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-
-
-  // Get User Details
   Stream<UserDetailsModel?> getUserDetailsStream(String userId) {
-    return _firestore.collection('userdetails').doc(userId).snapshots().map((snapshot) {
+    return _firestore
+        .collection('userdetails')
+        .doc(userId)
+        .snapshots()
+        .map((snapshot) {
       if (snapshot.exists) {
         return UserDetailsModel.fromJson(snapshot.data()!);
       } else {

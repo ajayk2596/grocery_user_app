@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_user_app/controllers/provider/users/user_controller.dart';
 import 'package:grocery_user_app/views/screens/home/home_drawer.dart';
-import 'package:grocery_user_app/views/screens/home/product_details_screen.dart';
+import 'package:grocery_user_app/views/screens/products/product_details_screen.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/provider/users/product_provider.dart';
-import 'home_fruit_page.dart';
+import '../../../controllers/provider/products/product_provider.dart';
+import '../fruits/home_fruit_page.dart';
 
 class HomeLungungenPage extends StatefulWidget {
 

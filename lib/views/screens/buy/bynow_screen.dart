@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../controllers/provider/users/user_provider.dart';
-import '../../../models/products_models.dart';
+import '../../../models/products/products_models.dart';
 import '../../../models/users/user_details_model.dart';
 import '../NewAddress/new_address.dart';
 import '../NewAddress/update_user_address.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../auth/change_password_screen.dart';
-import '../../../edite_profile_page.dart';
+import '../auth/edite_profile_screen.dart';
 
 class ProfileSettingsPage extends StatefulWidget {
   @override

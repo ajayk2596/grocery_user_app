@@ -10,7 +10,6 @@ import '../../../models/users/user_model.dart';
 import '../../../views/screens/auth/signup2verify_otp.dart';
 import '../../../views/screens/home/home_lungangen_page.dart';
 
-
 class UserController with ChangeNotifier {
   File? profileImage;
   final ImagePicker _picker = ImagePicker();
@@ -56,8 +55,6 @@ class UserController with ChangeNotifier {
     );
   }
 
-  ///////User Sign_up
-
   Future<void> userSignUp({
     required BuildContext context,
     String? uid,
@@ -101,7 +98,6 @@ class UserController with ChangeNotifier {
     }
   }
 
-// Helper function to upload the profile image
   Future<String> _uploadProfileImage(String userId, File imageFile) async {
     try {
       var storageRef =
@@ -112,10 +108,7 @@ class UserController with ChangeNotifier {
       print("Error uploading image: $e");
       return "";
     }
-    notifyListeners();
   }
-
-  // UpDateUser Profile method
 
   Future<void> updateUserProfile({
     required String uid,
@@ -129,11 +122,9 @@ class UserController with ChangeNotifier {
     try {
       String? imageUrl;
       if (imageFile != null) {
-        // Re-upload new profile image if changed
         imageUrl = await _uploadProfileImage(uid, imageFile);
       }
 
-      // Update the data in Firebase Firestore
       await FirebaseFirestore.instance.collection('users').doc(uid).update({
         'name': name,
         'email': email,
@@ -142,14 +133,12 @@ class UserController with ChangeNotifier {
       });
 
       Fluttertoast.showToast(msg: "Profile updated successfully!");
-      notifyListeners(); // Notify UI about the updated data
+      notifyListeners();
     } catch (error) {
       Fluttertoast.showToast(
           msg: "Error updating profile: ${error.toString()}");
     }
   }
-
-//// User SignIn
 
   Future<void> userSignin(
       BuildContext context, String email, String password) async {
@@ -190,8 +179,6 @@ class UserController with ChangeNotifier {
     }
   }
 
-//  phone_auth
-
   var auth = FirebaseAuth.instance;
   var verify = "";
 
@@ -199,7 +186,7 @@ class UserController with ChangeNotifier {
     var number = "+91${phoneNumber}";
     print(number);
     auth.verifyPhoneNumber(
-      timeout: Duration(seconds: 3),
+      timeout: const Duration(seconds: 3),
       phoneNumber: number,
       verificationCompleted: (phoneAuthCredential) {
         print(phoneAuthCredential.verificationId);
@@ -220,8 +207,6 @@ class UserController with ChangeNotifier {
     );
   }
 
-  //  verify_otp
-
   Future<void> verifyOtp(
       BuildContext context, PhoneAuthCredential credential) async {
     FirebaseAuth.instance.signInWithCredential(credential).then((value) {
@@ -237,7 +222,6 @@ class UserController with ChangeNotifier {
     });
   }
 
-  // Method to pick an image
   Future<void> pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
     if (pickedFile != null) {

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../Address/address.dart';
 import '../orders/ordred.dart';
-import 'home_pament_page.dart';
-import 'home_profile_page.dart';
+import '../payments/home_pament_page.dart';
+import '../profile/home_profile_page.dart';
 
 class HomeAccountScreen extends StatefulWidget {
   @override

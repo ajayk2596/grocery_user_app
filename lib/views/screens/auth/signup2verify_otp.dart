@@ -6,7 +6,7 @@ import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controllers/provider/users/user_controller.dart';
-import '../home/home_fruit_page.dart';
+import '../fruits/home_fruit_page.dart';
 import '../home/home_lungangen_page.dart';
 
 class VerifyOtp extends StatefulWidget {

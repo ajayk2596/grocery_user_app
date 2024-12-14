@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/provider/users/cart_provider.dart';
-import '../../../controllers/provider/users/product_provider.dart';
-import '../../../models/products_models.dart';
-import 'bynow_screen.dart';
+import '../../../controllers/provider/carts/cart_provider.dart';
+import '../../../controllers/provider/products/product_provider.dart';
+import '../../../models/products/products_models.dart';
+import '../buy/bynow_screen.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   final Product productid;

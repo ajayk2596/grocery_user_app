@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_user_app/controllers/provider/users/cart_provider.dart';
-import 'package:grocery_user_app/controllers/provider/users/product_provider.dart';
+import 'package:grocery_user_app/controllers/provider/carts/cart_provider.dart';
+import 'package:grocery_user_app/controllers/provider/products/product_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'cart_screen.dart';
-import 'home_account_page.dart';
-import 'home_cart_page.dart';
-import 'home_categories_screen.dart';
-import 'home_favorit2_page.dart';
-import 'home_fruit_page.dart';
+import '../carts/cart_screen.dart';
+import '../accounts/home_account_page.dart';
+import '../carts/home_cart_page.dart';
+import '../categories/home_categories_screen.dart';
+import '../favorites/home_favorit2_page.dart';
+import '../fruits/home_fruit_page.dart';
 import 'home_lungangen_page.dart';
 
 class HomeScreen extends StatefulWidget {

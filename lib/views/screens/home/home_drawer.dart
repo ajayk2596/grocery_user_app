@@ -2,17 +2,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
- import 'package:grocery_user_app/views/screens/auth/email_screen.dart';
-
-
-
 import 'package:grocery_user_app/views/screens/auth/email_screen.dart';
-
-import 'package:grocery_user_app/views/screens/home/update_profile_screen.dart';
- import 'package:grocery_user_app/views/screens/auth/email_screen.dart';
-import 'package:grocery_user_app/views/screens/home/update_profile_screen.dart';
-
+import 'package:grocery_user_app/views/screens/profile/update_profile_screen.dart';
 import '../../../models/users/user_model.dart';
 
 class UserDrawer extends StatefulWidget {
@@ -24,15 +15,17 @@ class UserDrawer extends StatefulWidget {
 
 class _UserDrawerState extends State<UserDrawer> {
   bool showProgress = true;
-@override
+
+  @override
   void initState() {
-  Future.delayed(Duration(seconds: 5), () {
-    setState(() {
-      showProgress = false;
+    Future.delayed(Duration(seconds: 5), () {
+      setState(() {
+        showProgress = false;
+      });
     });
-  });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -78,7 +71,7 @@ class _UserDrawerState extends State<UserDrawer> {
               }
 
               Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
+                  snapshot.data!.data() as Map<String, dynamic>;
               UserModel user = UserModel.fromJson(data);
               return DrawerHeader(
                 decoration: const BoxDecoration(color: Colors.orange),
@@ -87,18 +80,23 @@ class _UserDrawerState extends State<UserDrawer> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                    CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.grey[200],
-                    backgroundImage: _getBackgroundImage(user.imageUrl),
-                    child: showProgress
-                        ? CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
-                    )
-                        : (_shouldShowDefaultIcon(user.imageUrl)
-                        ? const Icon(Icons.person, size: 40, color: Colors.white,)
-                        : null),
-                  ),
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.grey[200],
+                        backgroundImage: _getBackgroundImage(user.imageUrl),
+                        child: showProgress
+                            ? CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.grey),
+                              )
+                            : (_shouldShowDefaultIcon(user.imageUrl)
+                                ? const Icon(
+                                    Icons.person,
+                                    size: 40,
+                                    color: Colors.white,
+                                  )
+                                : null),
+                      ),
 
                       //first code
                       // CircleAvatar(
@@ -133,7 +131,6 @@ class _UserDrawerState extends State<UserDrawer> {
                   ),
                 ),
               );
-
             },
           ),
           _createDrawerItem(
@@ -168,22 +165,31 @@ class _UserDrawerState extends State<UserDrawer> {
             icon: Icons.edit,
             text: 'Edit Profile',
             onTap: () {
-
-
               //Navigator.pop(context);
               //Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile(),));
 
-              Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileScreen() ,));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfileScreen(),
+                  ));
 
-
-              Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileScreen() ,));
-             },
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfileScreen(),
+                  ));
+            },
           ),
           _createDrawerItem(
             icon: Icons.logout,
             text: 'Log Out',
             onTap: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EmailLoginScreen(),));
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EmailLoginScreen(),
+                  ));
             },
           ),
         ],

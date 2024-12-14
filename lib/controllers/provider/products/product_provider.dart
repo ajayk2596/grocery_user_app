@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
-import '../../../models/products_models.dart';
+import '../../../models/products/products_models.dart';
 
 class ProductProvider with ChangeNotifier {
   int _count=0;

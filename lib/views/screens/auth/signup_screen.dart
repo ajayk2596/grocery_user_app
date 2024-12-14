@@ -14,23 +14,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
         builder: (context, constraints) {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Back arrow icon
                   Align(
                     alignment: Alignment.topLeft,
                     child: IconButton(
-                      icon: Icon(Icons.arrow_back_ios_new_outlined, color: Colors.orange),
-                      onPressed: () {
-                        // Handle back action here
-                      },
+                      icon: Icon(Icons.arrow_back_ios_new_outlined,
+                          color: Colors.orange),
+                      onPressed: () {},
                     ),
                   ),
                   SizedBox(height: 20),
-
-                  // "Sign Up" text
                   Center(
                     child: Text(
                       'Sign Up',
@@ -42,21 +39,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   SizedBox(height: 10),
-
-                  // Illustration Image
                   Center(
                     child: Image.asset(
                       "assets/images/verrynumber.png",
-                      height: constraints.maxHeight * 0.3, // Adjust image height relative to screen height
+                      height: constraints.maxHeight * 0.3,
                     ),
                   ),
                   SizedBox(height: 30),
-
-                  // Name Surname TextField
                   TextField(
                     decoration: InputDecoration(
                       hintText: 'Name Surname',
-                      contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
                         borderSide: BorderSide.none,
@@ -66,8 +60,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   SizedBox(height: 15),
-
-                  // Custom Phone Number TextField with Flag Icon and Arrow Dropdown
                   TextField(
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
@@ -78,29 +70,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       filled: true,
                       fillColor: Colors.grey[200],
                       hintText: 'Phone Number',
-                      contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                      // Prefix with Flag icon and dropdown arrow
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                       prefixIcon: Container(
                         width: 90, // Adjust as needed
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            // Flag image (Provide the image file path)
                             Image.asset(
                               "assets/images/flag.png",
                               width: 24, // Flag size
                             ),
                             SizedBox(width: 5),
-                            Icon(Icons.arrow_drop_down), // Arrow icon for dropdown
+                            Icon(Icons.arrow_drop_down),
                           ],
                         ),
                       ),
                     ),
                   ),
                   SizedBox(height: 20),
-
-                  // Verification message text
                   Center(
                     child: Text(
                       'We need to verify you. We will send you a one-time verification code.',
@@ -112,8 +101,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   SizedBox(height: 30),
-
-                  // "Next" button
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -125,10 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         padding: EdgeInsets.symmetric(vertical: 16),
                       ),
                       onPressed: () {
-                        // Handle next button action
-                        setState(() {
-                          // Add state logic here if necessary
-                        });
+                        setState(() {});
                       },
                       child: Text(
                         'Next',
@@ -137,15 +121,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   SizedBox(height: 20),
-
-                  // "Already have an account? Login" text
                   Center(
                     child: GestureDetector(
                       onTap: () {
-                        // Handle login action
-                        setState(() {
-                          // Add state logic if necessary
-                        });
+                        setState(() {});
                       },
                       child: Text(
                         'Already have an account? Login',

@@ -7,7 +7,6 @@ class ChangePasswordScreen extends StatefulWidget {
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   int _currentIndex = 0;
-
   bool _isOldPasswordVisible = false;
   bool _isNewPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
@@ -20,9 +19,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.orange),
-          onPressed: () {
-            // Handle back action
-          },
+          onPressed: () {},
         ),
         title: Text(
           'Change Password',
@@ -50,16 +47,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               });
             }),
             SizedBox(height: 16),
-            _buildPasswordField('Confirm Password', _isConfirmPasswordVisible, () {
+            _buildPasswordField('Confirm Password', _isConfirmPasswordVisible,
+                () {
               setState(() {
                 _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
               });
             }),
             SizedBox(height: 32),
             ElevatedButton(
-              onPressed: () {
-                // Handle confirm action
-              },
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
@@ -71,11 +67,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             ),
             SizedBox(height: 16),
             OutlinedButton(
-              onPressed: () {
-                // Handle back to sign-in action
-              },
+              onPressed: () {},
               style: OutlinedButton.styleFrom(
-                foregroundColor: Colors.orange, padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                foregroundColor: Colors.orange,
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -99,15 +94,19 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Shop'),
           BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorite'),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart), label: 'Cart'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: 'Favorite'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle), label: 'Account'),
         ],
       ),
     );
   }
 
-  Widget _buildPasswordField(String label, bool isVisible, VoidCallback onToggleVisibility) {
+  Widget _buildPasswordField(
+      String label, bool isVisible, VoidCallback onToggleVisibility) {
     return TextField(
       obscureText: !isVisible,
       decoration: InputDecoration(

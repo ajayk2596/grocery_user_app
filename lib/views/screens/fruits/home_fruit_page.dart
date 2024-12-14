@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'home_account_page.dart';
-import 'home_cart_page.dart';
-import 'home_categories_screen.dart';
-import 'home_favorit2_page.dart';
-import 'home_lungangen_page.dart';
+import '../accounts/home_account_page.dart';
+import '../carts/home_cart_page.dart';
+import '../categories/home_categories_screen.dart';
+import '../favorites/home_favorit2_page.dart';
+import '../home/home_lungangen_page.dart';
 
 class HomePageApple extends StatefulWidget {
   @override

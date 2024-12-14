@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery_user_app/ViewProduct/view_product.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
+
+import '../products/view_product.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,17 +19,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _uploadFile() async {
     if (_image == null) return;
 
-    // File ko Firebase Storage mein upload karne ke liye filename generate karein
-    //String fileName = basename(_image!.path);
 
     String filePath = 'images/${DateTime.now().millisecondsSinceEpoch}.jpg';
     Reference firebaseStorageRef = FirebaseStorage.instance.ref().child(filePath);
 
     try {
-      // Upload task start
       UploadTask uploadTask = firebaseStorageRef.putFile(_image!);
       await uploadTask;
-      // Upload ke baad download URL get karenge
       String downloadURL = await firebaseStorageRef.getDownloadURL();
       var id= DateTime.now().microsecondsSinceEpoch.toString();
       firebase.doc(id).set({

@@ -6,7 +6,7 @@ class ProductItemModel {
   final double price;
   final bool isAvailable;
   final bool isFeatured;
-  final String categoryId; // Added categoryId field
+  final String categoryId;
 
   ProductItemModel({
     required this.productid,
@@ -19,7 +19,6 @@ class ProductItemModel {
     required this.categoryId,
   });
 
-  // Factory method to create a ProductModel object from Firestore data
   factory ProductItemModel.fromMap(Map<String, dynamic> data) {
     return ProductItemModel(
       productid: data['id'] ?? '',
@@ -29,11 +28,10 @@ class ProductItemModel {
       price: (data['price'] ?? 0.0).toDouble(),
       isAvailable: data['isAvailable'] ?? false,
       isFeatured: data['isFeatured'] ?? false,
-      categoryId: data['categoryId'] ?? '', // Fetching categoryId from Firestore
+      categoryId: data['categoryId'] ?? '',
     );
   }
 
-  // Method to convert a ProductModel object into a Firestore-compatible map
   Map<String, dynamic> toMap() {
     return {
       'id': productid,
@@ -43,7 +41,7 @@ class ProductItemModel {
       'price': price,
       'isAvailable': isAvailable,
       'isFeatured': isFeatured,
-      'categoryId': categoryId, // Adding categoryId for Firestore
+      'categoryId': categoryId,
     };
   }
 }
