@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +5,7 @@ import 'package:grocery_user_app/views/screens/auth/email_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'controllers/provider/users/user_controller.dart';
+
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -92,10 +91,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     backgroundImage: data.profileImage != null
                         ? FileImage(data.profileImage!)
                         : (data.userData?.imageUrl != null
-                        ? NetworkImage(data.userData!.imageUrl!)
-                        : null) as ImageProvider?,
+                            ? NetworkImage(data.userData!.imageUrl!)
+                            : null) as ImageProvider?,
                     child: data.profileImage == null &&
-                        (data.userData?.imageUrl == null)
+                            (data.userData?.imageUrl == null)
                         ? Icon(Icons.person, size: 60, color: Colors.grey)
                         : null,
                   ),
@@ -170,12 +169,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 child: isLoading
                     ? CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                )
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      )
                     : Text(
-                  'Save',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
+                        'Save',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
               ),
             ),
             SizedBox(height: 20),
@@ -210,12 +209,12 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget _buildTextField(
-      TextEditingController controller,
-      String hintText,
-      IconData icon,
-      TextInputType keyboardType,
-      int? maxLength,
-      ) {
+    TextEditingController controller,
+    String hintText,
+    IconData icon,
+    TextInputType keyboardType,
+    int? maxLength,
+  ) {
     return Card(
       elevation: 2,
       child: TextField(
@@ -238,9 +237,9 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget _buildPasswordTextField(
-      TextEditingController controller,
-      String hintText,
-      ) {
+    TextEditingController controller,
+    String hintText,
+  ) {
     return Card(
       elevation: 2,
       child: TextField(
@@ -268,9 +267,6 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 }
 
-
-
-=======
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
@@ -553,4 +549,3 @@ class _RegisterPageState extends State<RegisterPage> {
 //     );
 //   }
 // }
->>>>>>> Stashed changes
