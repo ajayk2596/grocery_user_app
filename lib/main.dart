@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(create: (Contxte)=> UserController(),
       child:  MaterialApp(
         debugShowCheckedModeBanner: false,
+
         home: SplashScreen(),
       ),
     );

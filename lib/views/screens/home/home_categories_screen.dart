@@ -12,7 +12,6 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     var screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(

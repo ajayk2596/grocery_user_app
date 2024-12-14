@@ -11,7 +11,7 @@ class AuthController extends ChangeNotifier{
 
     var cId=FirebaseAuth.instance.currentUser!.uid;
     await c.collection('users').doc(cId).set({
-      "uid":"$cId",
+      "uid":cId,
       "email":email,
       "password":password
     });

@@ -10,20 +10,20 @@ import '../../../models/users/user_model.dart';
 import '../../../views/screens/auth/signup2verify_otp.dart';
 import '../../../views/screens/home/home_lungangen_page.dart';
 
-class UserController with ChangeNotifier {
 
+class UserController with ChangeNotifier {
   File? profileImage;
   final ImagePicker _picker = ImagePicker();
 
-  final CollectionReference _usersCollection = FirebaseFirestore.instance.collection('users');
-  final StreamController<UserModel?> _userDataController = StreamController<UserModel?>.broadcast();
+  final CollectionReference _usersCollection =
+      FirebaseFirestore.instance.collection('users');
+  final StreamController<UserModel?> _userDataController =
+      StreamController<UserModel?>.broadcast();
 
   Stream<UserModel?> get userDataStream => _userDataController.stream;
 
   UserModel? _userData;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Getter for userData
   UserModel? get userData => _userData;
 
   UserController() {
@@ -42,10 +42,11 @@ class UserController with ChangeNotifier {
   }
 
   void _listenToUserData(String uid) {
-    _firestore.collection('users').doc(uid).snapshots().listen(
-          (DocumentSnapshot snapshot) {
+    _usersCollection.doc(uid).snapshots().listen(
+      (DocumentSnapshot snapshot) {
         if (snapshot.exists) {
-          _userData = UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
+          _userData =
+              UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
           notifyListeners();
         }
       },
@@ -55,21 +56,20 @@ class UserController with ChangeNotifier {
     );
   }
 
+  ///////User Sign_up
 
- ///////User Sign_up
-
-  Future<void> userSignUp(
-  { required BuildContext context,
+  Future<void> userSignUp({
+    required BuildContext context,
     String? uid,
     File? imageFile,
     String? name,
     String? email,
     String? phone,
     String? password,
-    }
-      ) async {
+  }) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email!,
         password: password!,
       );
@@ -78,30 +78,34 @@ class UserController with ChangeNotifier {
       if (user != null) {
         String imageUrl = await _uploadProfileImage(user.uid, imageFile!);
         await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-          'uid':user.uid,
+          'uid': user.uid,
           'name': name,
           'email': email,
-          'passWord':password,
-           'phone': phone!,
+          'passWord': password,
+          'phone': phone!,
           'imageUrl': imageUrl,
           'createdAt': Timestamp.now(),
         });
 
         Fluttertoast.showToast(msg: "Account created successfully!");
 
-       Navigator.push(context, MaterialPageRoute(builder: (context) => HomeLungungenPage(),));
-       notifyListeners();
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeLungungenPage(),
+            ));
+        notifyListeners();
       }
     } catch (error) {
       Fluttertoast.showToast(msg: "Error signing up: ${error.toString()}");
     }
   }
 
-
 // Helper function to upload the profile image
   Future<String> _uploadProfileImage(String userId, File imageFile) async {
     try {
-      var storageRef = FirebaseStorage.instance.ref().child("profilePictures/$userId");
+      var storageRef =
+          FirebaseStorage.instance.ref().child("profilePictures/$userId");
       await storageRef.putFile(imageFile);
       return await storageRef.getDownloadURL();
     } catch (e) {
@@ -111,7 +115,6 @@ class UserController with ChangeNotifier {
     notifyListeners();
   }
 
-
   // UpDateUser Profile method
 
   Future<void> updateUserProfile({
@@ -119,7 +122,9 @@ class UserController with ChangeNotifier {
     String? name,
     String? email,
     String? phone,
-    File? imageFile, required BuildContext context, required String password,
+    File? imageFile,
+    required BuildContext context,
+    required String password,
   }) async {
     try {
       String? imageUrl;
@@ -139,35 +144,36 @@ class UserController with ChangeNotifier {
       Fluttertoast.showToast(msg: "Profile updated successfully!");
       notifyListeners(); // Notify UI about the updated data
     } catch (error) {
-      Fluttertoast.showToast(msg: "Error updating profile: ${error.toString()}");
+      Fluttertoast.showToast(
+          msg: "Error updating profile: ${error.toString()}");
     }
   }
 
-
-
-
-
 //// User SignIn
 
-
-  Future<void> userSignin(BuildContext context, String email, String password) async {
+  Future<void> userSignin(
+      BuildContext context, String email, String password) async {
     if (email.isEmpty || password.isEmpty) {
       Fluttertoast.showToast(msg: "Please fill in both email and password.");
       return;
     }
 
-    if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)) {
+    if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email)) {
       Fluttertoast.showToast(msg: "Please enter a valid email address.");
       return;
     }
 
     if (password.length < 6) {
-      Fluttertoast.showToast(msg: "Password should be at least 6 characters long.");
+      Fluttertoast.showToast(
+          msg: "Password should be at least 6 characters long.");
       return;
     }
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -186,12 +192,10 @@ class UserController with ChangeNotifier {
 
 //  phone_auth
 
-
   var auth = FirebaseAuth.instance;
   var verify = "";
 
-  void phoneAuth(BuildContext context,String phoneNumber)async {
-
+  void phoneAuth(BuildContext context, String phoneNumber) async {
     var number = "+91${phoneNumber}";
     print(number);
     auth.verifyPhoneNumber(
@@ -212,29 +216,26 @@ class UserController with ChangeNotifier {
           ),
         );
       },
-      codeAutoRetrievalTimeout: (verificationId) {
-
-      },
+      codeAutoRetrievalTimeout: (verificationId) {},
     );
   }
 
   //  verify_otp
 
-  Future<void> verifyOtp( BuildContext context,PhoneAuthCredential credential)async {
+  Future<void> verifyOtp(
+      BuildContext context, PhoneAuthCredential credential) async {
+    FirebaseAuth.instance.signInWithCredential(credential).then((value) {
+      var id = value.user?.uid;
 
-    FirebaseAuth.instance.signInWithCredential(credential).then((value){
-
-      var id =value.user?.uid;
-
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeLungungenPage(),));
-
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeLungungenPage(),
+          ));
     }).onError((error, stackTrace) {
-
       Fluttertoast.showToast(msg: "$error");
     });
   }
-
-
 
   // Method to pick an image
   Future<void> pickImage(ImageSource source) async {
@@ -244,13 +245,4 @@ class UserController with ChangeNotifier {
       notifyListeners();
     }
   }
-
-
-
-
-
-
-
-
-
 }
