@@ -182,7 +182,7 @@ class _HomeLungungenPageState extends State<HomeLungungenPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ProductDetailScreen(productid: product),
+                          builder: (context) => ProductDetailScreen(productId: product),
                         ),
                       );
                     },

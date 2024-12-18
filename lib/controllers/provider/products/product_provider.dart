@@ -57,40 +57,36 @@ class ProductProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  final countAddToCart = [];
-
-
-get count => _count;
-  void incrementAddToCart(){
-    _count++;
-    notifyListeners();
-  }
-
-
-  void decrementAddToCart(){
-    -_count--;
-    notifyListeners();
-  }
-
-
-  void addProductsToFirebase(Product product) {
-    final docRef = FirebaseFirestore.instance.collection('addtocart').doc(product.id.toString());
-    docRef.set({
-      'id': product.id,
-      'title': product.title,
-      'price': product.price,
-      'description': product.description,
-      'thumbnail': product.thumbnail,
-      'discountPercentage': product.discountPercentage,
-      'quantity': 1,
-    }).then((_) {
-      print("${product.title} added to Firebase!");
-    }).catchError((error) {
-      print("Failed to add product: $error");
-    });
-  }
 
 
 
+  // get count => _count;
+  // void incrementAddToCart(){
+  //   _count++;
+  //   notifyListeners();
+  // }
+  //
+  //
+  // void decrementAddToCart(){
+  //   -_count--;
+  //   notifyListeners();
+  // }
 
+
+  // void addProductsToFirebase(Product product) {
+  //   final docRef = FirebaseFirestore.instance.collection('addtocart').doc(product.id.toString());
+  //   docRef.set({
+  //     'id': product.id,
+  //     'title': product.title,
+  //     'price': product.price,
+  //     'description': product.description,
+  //     'thumbnail': product.thumbnail,
+  //     'discountPercentage': product.discountPercentage,
+  //     'quantity': 1,
+  //   }).then((_) {
+  //     print("${product.title} added to Firebase!");
+  //   }).catchError((error) {
+  //     print("Failed to add product: $error");
+  //   });
+  // }
 }

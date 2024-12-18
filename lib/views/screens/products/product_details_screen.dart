@@ -2,21 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../../controllers/provider/carts/cart_provider.dart';
-import '../../../controllers/provider/products/product_provider.dart';
 import '../../../models/products/products_models.dart';
 import '../buy/bynow_screen.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  final Product productid;
+  final Product productId;
 
-  const ProductDetailScreen({Key? key, required this.productid}) : super(key: key);
+  const ProductDetailScreen({Key? key, required this.productId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(productid.title ?? 'Product Details'),
+        title: Text(productId.title ?? 'Product Details'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.orange),
           onPressed: () => Navigator.pop(context),
@@ -27,7 +26,7 @@ class ProductDetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.network(
-              productid.thumbnail ?? '',
+              productId.thumbnail ?? '',
               fit: BoxFit.cover,
               width: double.infinity,
               height: 250,
@@ -40,7 +39,7 @@ class ProductDetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    productid.title ?? 'No Title',
+                    productId.title ?? 'No Title',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
@@ -48,7 +47,7 @@ class ProductDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Price: \$${productid.price?.toStringAsFixed(2) ?? 'N/A'}',
+                    'Price: \$${productId.price?.toStringAsFixed(2) ?? 'N/A'}',
                     style: const TextStyle(
                       fontSize: 18,
                       color: Colors.green,
@@ -56,14 +55,14 @@ class ProductDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    'Discount: ${(productid.discountPercentage ?? 0).toStringAsFixed(1)}%',
+                    'Discount: ${(productId.discountPercentage ?? 0).toStringAsFixed(1)}%',
                     style: const TextStyle(
                       color: Colors.blueGrey,
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    productid.description ?? 'No Description',
+                    productId.description ?? 'No Description',
                     style: const TextStyle(
                       fontSize: 16,
                     ),
@@ -82,16 +81,13 @@ class ProductDetailScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
 
-                final productProvider = Provider.of<ProductProvider>(context, listen: false);
-                productProvider.incrementAddToCart();
 
-                // Add to cart locally
-                Provider.of<CartProvider>(context, listen: false).addToCart(productid);
 
-                // Add specific product to Firebase
-                productProvider.addProductsToFirebase(productid);
+            Provider.of<CartProvider>(context, listen: false).addToCartFirebase(productId);
 
-                Fluttertoast.showToast(msg: "${productid.title} added to cart successfully");
+
+
+                Fluttertoast.showToast(msg: "${productId.title} added to cart successfully");
               },
               child: const Text('Add to Cart'),
             ),
@@ -99,8 +95,7 @@ class ProductDetailScreen extends StatelessWidget {
             ElevatedButton(
 
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => BuyNowScreen(product: productid,),));
-               // Fluttertoast.showToast(msg: "${productid.title}  By now successful");
+                Navigator.push(context, MaterialPageRoute(builder: (context) => BuyNowScreen(product: productId,),));
 
 
               },

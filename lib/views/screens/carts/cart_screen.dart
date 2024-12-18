@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:grocery_user_app/controllers/provider/carts/cart_provider.dart';
 import 'package:provider/provider.dart';
-
-import '../../../controllers/provider/products/product_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final productProvider =
-        Provider.of<ProductProvider>(context, listen: false);
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    final String uid = FirebaseAuth.instance.currentUser?.uid ?? '';
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Cart'),
+        title: Consumer<CartProvider>(
+          builder: (context, cartProvider, _) {
+            return Text('My Cart (${cartProvider.counter})');
+          },
+
+        ),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('addtocart').snapshots(),
+      body: StreamBuilder<List<Map<String, dynamic>>>(
+        stream: cartProvider.getCartItems(), // Updated method call
         builder: (context, snapshot) {
-          // Check for errors or loading
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -27,8 +31,7 @@ class CartScreen extends StatelessWidget {
             return const Center(child: Text('Error fetching data!'));
           }
 
-          // Get the cart data
-          final cartItems = snapshot.data?.docs ?? [];
+          final cartItems = snapshot.data ?? [];
 
           if (cartItems.isEmpty) {
             return const Center(child: Text('No items in cart.'));
@@ -45,6 +48,7 @@ class CartScreen extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: cartItems.length,
                   itemBuilder: (context, index) {
+
                     final item = cartItems[index];
                     final int quantity = item['quantity'] ?? 1;
 
@@ -53,19 +57,19 @@ class CartScreen extends StatelessWidget {
                       child: ListTile(
                         leading: item['thumbnail'] != null
                             ? Image.network(
-                                item['thumbnail'],
-                                width: 50,
-                                height: 50,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    const Icon(Icons.image, size: 50),
-                              )
+                          item['thumbnail'],
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                          const Icon(Icons.image, size: 50),
+                        )
                             : const Icon(Icons.image, size: 50),
                         title: Text(item['title'] ?? 'No Title'),
                         subtitle: Text(
                           'Price: \$${item['price'] ?? 0.0}\n'
-                          'Quantity: $quantity\n'
-                          'Total: \$${(item['price'] ?? 0) * quantity}',
+                              'Quantity: $quantity\n'
+                              'Total: \$${(item['price'] ?? 0) * quantity}',
                         ),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -75,8 +79,10 @@ class CartScreen extends StatelessWidget {
                               onPressed: () {
                                 if (quantity > 1) {
                                   FirebaseFirestore.instance
-                                      .collection('addtocart')
-                                      .doc(item.id)
+                                      .collection('carts')
+                                      .doc(uid)
+                                      .collection('userCart')
+                                      .doc(item['id'])
                                       .update({'quantity': quantity - 1});
                                 }
                               },
@@ -85,18 +91,22 @@ class CartScreen extends StatelessWidget {
                               icon: const Icon(Icons.add),
                               onPressed: () {
                                 FirebaseFirestore.instance
-                                    .collection('addtocart')
-                                    .doc(item.id)
+                                    .collection('carts')
+                                    .doc(uid)
+                                    .collection('userCart')
+                                    .doc(item['id'])
                                     .update({'quantity': quantity + 1});
                               },
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete, color: Colors.red),
                               onPressed: () {
-                                productProvider.decrementAddToCart();
+                                cartProvider.addToCartDecrement();
                                 FirebaseFirestore.instance
-                                    .collection('addtocart')
-                                    .doc(item.id)
+                                    .collection('carts')
+                                    .doc(uid)
+                                    .collection('userCart')
+                                    .doc(item['id'])
                                     .delete()
                                     .then((_) {
                                   ScaffoldMessenger.of(context).showSnackBar(
