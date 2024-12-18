@@ -60,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Positioned(
                     right: 0,
                     child: Container(
+
                       padding: EdgeInsets.all(2),
                       decoration: BoxDecoration(
                         color: Colors.red,
