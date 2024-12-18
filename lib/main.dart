@@ -21,6 +21,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => UserController()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        //StreamProvider(create: (context) => CartProvider().getCartItems(), initialData: 0)
       ],
       child: const MyApp(),
     ),
