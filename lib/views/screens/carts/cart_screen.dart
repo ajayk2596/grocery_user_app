@@ -16,7 +16,7 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         title: Consumer<CartProvider>(
           builder: (context, cartProvider, _) {
-            return Text('My Cart (${cartProvider.counter})');
+            return Center(child: Text('My Cart '));
           },
 
         ),

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:grocery_user_app/views/screens/auth/email_screen.dart';
 import 'package:grocery_user_app/views/screens/home/home_screen.dart';
-import 'package:provider/provider.dart';
 
-import '../../../controllers/provider/carts/cart_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
