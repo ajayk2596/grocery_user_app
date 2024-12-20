@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:grocery_user_app/views/screens/home/home_lungangen_page.dart';
 
 class FavoritePage extends StatefulWidget {
   @override
@@ -64,7 +65,9 @@ class _FavoritePageState extends State<FavoritePage> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeLungungenPage(),));
+                },
                 child: Text(
                   "Start shopping",
                   style: TextStyle(fontSize: 18),

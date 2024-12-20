@@ -98,16 +98,6 @@ class _UserDrawerState extends State<UserDrawer> {
                                 : null),
                       ),
 
-                      //first code
-                      // CircleAvatar(
-                      //   radius: 40,
-                      //   backgroundColor: Colors.grey[200],
-                      //   backgroundImage: _getBackgroundImage(user.imageUrl),
-                      //   child: _shouldShowDefaultIcon(user.imageUrl)
-                      //       ? const Icon(Icons.person, size: 40, color: Colors.white)
-                      //       : null,
-                      // ),
-
                       const SizedBox(height: 0),
                       Text(
                         user.name ?? 'Name not set',
@@ -165,20 +155,12 @@ class _UserDrawerState extends State<UserDrawer> {
             icon: Icons.edit,
             text: 'Edit Profile',
             onTap: () {
-              //Navigator.pop(context);
-              //Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfile(),));
-
               Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => EditProfileScreen(),
                   ));
 
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditProfileScreen(),
-                  ));
             },
           ),
           _createDrawerItem(

@@ -152,6 +152,8 @@ class Product {
             images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
         "thumbnail": thumbnail,
       };
+
+
 }
 
 enum AvailabilityStatus { IN_STOCK, LOW_STOCK }

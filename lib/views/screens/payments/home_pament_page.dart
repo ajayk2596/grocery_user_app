@@ -18,7 +18,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: Icon(Icons.arrow_back, color: Colors.orange),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.orange),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text(
           "Payment",
           style: TextStyle(color: Colors.orange, fontSize: screenWidth * 0.05),

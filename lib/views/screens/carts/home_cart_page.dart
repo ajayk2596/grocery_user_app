@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../accounts/home_account_page.dart';
-import '../categories/home_categories_screen.dart';
-import '../favorites/home_favorit2_page.dart';
-import '../home/home_lungangen_page.dart';
 
 class HomeCartPage extends StatefulWidget {
   @override
@@ -13,7 +9,6 @@ class HomeCartPage extends StatefulWidget {
 class _HomeCartPageState extends State<HomeCartPage> {
 
 
-  // Cart items with quantities and prices
   List<Map<String, dynamic>> cartItems = [
 
     {'name': 'Red Apple', 'image': 'assets/images/Apple.png', 'price': 4.99, 'quantity': 2, 'unit': 'kg'},
@@ -23,14 +18,12 @@ class _HomeCartPageState extends State<HomeCartPage> {
     {'name': 'Lichi', 'image': 'assets/images/Chilli.png', 'price': 60.00, 'quantity': 2, 'unit': 'kg'},
   ];
 
-  // Function to increase quantity
   void increaseQuantity(int index) {
     setState(() {
       cartItems[index]['quantity']++;
     });
   }
 
-  // Function to decrease quantity
   void decreaseQuantity(int index) {
     setState(() {
       if (cartItems[index]['quantity'] > 1) {
@@ -39,14 +32,12 @@ class _HomeCartPageState extends State<HomeCartPage> {
     });
   }
 
-  // Calculate total price of all items in the cart
   double getTotalPrice() {
     return cartItems.fold(0, (total, item) => total + item['price'] * item['quantity']);
   }
 
   @override
   Widget build(BuildContext context) {
-    // Using MediaQuery to get screen dimensions
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
 
