@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery_user_app/views/screens/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'controllers/provider/carts/cart_provider.dart';
+import 'controllers/provider/favorite/favorite_provider.dart';
 import 'controllers/provider/products/product_provider.dart';
 import 'controllers/provider/users/user_controller.dart';
 import 'controllers/provider/users/user_provider.dart';
@@ -21,6 +22,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => UserController()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => FavoriteProvider()),
         //StreamProvider(create: (context) => CartProvider().getCartItems(), initialData: 0)
       ],
       child: const MyApp(),

@@ -19,8 +19,8 @@ class _HomeAccountScreenState extends State<HomeAccountScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.orange),
-          onPressed: () {},
+          icon: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.orange),
+          onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
