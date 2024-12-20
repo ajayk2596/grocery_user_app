@@ -1,99 +1,73 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../../controllers/provider/favorite/favorite_provider.dart';
+import '../../../models/favoritemodel/favorite_model.dart';
+import 'home_favorite_page.dart';
 
-class HomeFavoriteScreenTwo extends StatefulWidget {
+class FavoriteScreenTwo extends StatefulWidget {
+  const FavoriteScreenTwo({Key? key}) : super(key: key);
+
   @override
-  _HomeFavoriteScreenTwoState createState() => _HomeFavoriteScreenTwoState();
+  _FavoriteScreenTwoState createState() => _FavoriteScreenTwoState();
 }
 
-class _HomeFavoriteScreenTwoState extends State<HomeFavoriteScreenTwo> {
+class _FavoriteScreenTwoState extends State<FavoriteScreenTwo> {
+  final FavoriteProvider favoriteProvider = FavoriteProvider();
 
+  List<FavoriteModel> favorites = [];
+  bool isLoading = true;
 
-  // Sample data for favorite items
-  List<Map<String, dynamic>> favoriteItems = [
-    {
-      'name': 'Red Apple',
-      'price': '\$4.99',
-      'unit': 'kg',
-      'image': 'assets/images/Apple.png',
-    },
-    {
-      'name': 'Salmon',
-      'price': '\$50',
-      'unit': 'kg',
-      'image': 'assets/images/Salmon.png',
-    },
-    {
-      'name': 'Avocado Bowl',
-      'price': '\$24',
-      'unit': 'st',
-      'image': 'assets/images/Bowl.png',
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _loadFavorites();
+  }
+
+  Future<void> _loadFavorites() async {
+    final data = await favoriteProvider.getFavorites();
+    setState(() {
+      favorites = data;
+      isLoading = false;
+    });
+  }
+
+  Future<void> _deleteFavorite(FavoriteModel favorite) async {
+    await favoriteProvider.toggleFavorite(favorite);
+    setState(() {
+      favorites.remove(favorite); // Instantly update the UI
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.orange),
-          onPressed: () {},
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text(
-          'Favorite',
-          style: TextStyle(color: Colors.orange),
-        ),
-        centerTitle: true,
-      ),
-      body: ListView.builder(
-        itemCount: favoriteItems.length,
+      appBar: AppBar(title: const Text('Favorites')),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : favorites.isEmpty
+          ?  FavoritePage()
+          : ListView.builder(
+        itemCount: favorites.length,
         itemBuilder: (context, index) {
-          final item = favoriteItems[index];
-          return Dismissible(
-            key: Key(item['name']),
-            direction: DismissDirection.endToStart,
-            background: Container(
-              color: Colors.red,
-              alignment: Alignment.centerRight,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Icon(Icons.delete, color: Colors.white),
-            ),
-            onDismissed: (direction) {
-              setState(() {
-                favoriteItems.removeAt(index);
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("${item['name']} removed from favorites")),
-              );
-            },
+          final favorite = favorites[index];
+          return Card(
+            elevation: 2,
             child: ListTile(
-              leading: Image.asset(
-                item['image'],
+              leading: Image.network(
+                favorite.imageUrl,
                 width: 50,
                 height: 50,
+                fit: BoxFit.cover,
               ),
-              title: Text(
-                item['name'],
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Row(
-                children: [
-                  Icon(Icons.shopping_cart, color: Colors.orange, size: 18),
-                  SizedBox(width: 5),
-                  Text("Add to cart", style: TextStyle(color: Colors.orange)),
-                ],
-              ),
-              trailing: Text(
-                "${item['price']} ${item['unit']}",
-                style: TextStyle(fontWeight: FontWeight.bold),
+              title: Text(favorite.name),
+              subtitle: Text('\$${favorite.price.toStringAsFixed(2)}'),
+              trailing: IconButton(
+                icon: const Icon(Icons.delete, color: Colors.red),
+                onPressed: () => _deleteFavorite(favorite),
               ),
             ),
           );
         },
       ),
-
     );
   }
 }
