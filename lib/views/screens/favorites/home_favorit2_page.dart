@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../controllers/provider/favorite/favorite_provider.dart';
 import '../../../models/favoritemodel/favorite_model.dart';
+import 'home_favorite_page.dart';
 
 class FavoriteScreenTwo extends StatefulWidget {
   const FavoriteScreenTwo({Key? key}) : super(key: key);
@@ -43,7 +44,7 @@ class _FavoriteScreenTwoState extends State<FavoriteScreenTwo> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : favorites.isEmpty
-          ? const Center(child: Text('No favorites found.'))
+          ?  FavoritePage()
           : ListView.builder(
         itemCount: favorites.length,
         itemBuilder: (context, index) {

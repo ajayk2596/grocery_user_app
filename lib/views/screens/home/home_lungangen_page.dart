@@ -6,7 +6,6 @@ import 'package:grocery_user_app/views/screens/products/product_details_screen.d
 import 'package:provider/provider.dart';
 import '../../../controllers/provider/favorite/favorite_provider.dart';
 import '../../../controllers/provider/products/product_provider.dart';
-import '../favorites/home_favorit2_page.dart';
 import '../fruits/home_fruit_page.dart';
 
 class HomeLungungenPage extends StatefulWidget {
